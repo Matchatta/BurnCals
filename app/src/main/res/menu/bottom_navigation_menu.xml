@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:icon="@drawable/heart" android:id="@+id/navigation_health" android:title="Health" />
+    <item android:icon="@drawable/workout" android:id="@+id/navigation_exercises" android:title="Exercises" />
+    <item android:icon="@drawable/food" android:id="@+id/navigation_food" android:title="Food" />
+    <item android:icon="@drawable/report" android:id="@+id/navigation_record" android:title="Record" />
+    <item android:icon="@drawable/user" android:id="@+id/navigation_user" android:title="User" />
+</menu>

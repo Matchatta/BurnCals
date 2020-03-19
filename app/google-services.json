@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "876256250099",
+    "firebase_url": "https://burn-cals.firebaseio.com",
+    "project_id": "burn-cals",
+    "storage_bucket": "burn-cals.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876256250099:android:32cec6329845da9a808f86",
+        "android_client_info": {
+          "package_name": "com.example.wireless_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876256250099-t1adop961kkftnfrhfup6rcl8vhroshp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wireless_project",
+            "certificate_hash": "9e39f8551aa0472949f06ce7480eb45d0ab3972f"
+          }
+        },
+        {
+          "client_id": "876256250099-jfgqoiqust7i7j5eus1cu6re1fj63cf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQN3IgNdeoyojFLBcOfl8SK-tJw_KzEnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876256250099-jfgqoiqust7i7j5eus1cu6re1fj63cf1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
