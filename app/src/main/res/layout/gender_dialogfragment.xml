@@ -16,17 +16,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@id/text"
-            android:layout_margin="10dp"
+        <RadioGroup
+            android:id="@+id/gender"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="left"
-            android:textColor="@color/colorWhite"
-            android:hint="67"
-            android:textColorHint="@color/colorWhite"
-            android:inputType="number" />
+            android:layout_height="match_parent" >
+
+            <RadioButton
+                android:id="@+id/male"
+                android:textColor="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/male"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/female"
+                android:textColor="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/female"
+                android:checked="false"/>
+        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,8 +55,8 @@
 
             <Button
                 android:id="@+id/summit"
+                android:layout_marginStart="10dp"
                 android:layout_width="fill_parent"
-                android:layout_marginStart="5dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@drawable/box2"

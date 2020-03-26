@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginActivity"
+    tools:context=".ui.LoginActivity"
     android:background="@color/colorBlack">
 
     <LinearLayout
@@ -50,8 +50,7 @@
                     android:layout_height="fill_parent"
                     android:gravity="center"
                     android:text="LOGIN WITH GOOGLE"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite" />
+                    android:textAllCaps="false" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

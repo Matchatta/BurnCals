@@ -1,4 +1,4 @@
-package com.example.wireless_project
+package com.example.wireless_project.ui
 
 
 import android.content.Context
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.example.wireless_project.R
 import kotlinx.android.synthetic.main.dialogfragment.*
 
 

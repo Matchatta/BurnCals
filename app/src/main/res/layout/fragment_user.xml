@@ -21,29 +21,29 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/user_act" />
-
+                android:layout_gravity="center"
+                android:src="@drawable/user_act"/>
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:gravity="center"
                 android:background="@drawable/rectangle"
-                android:text="Matchatta Toyaem"
+                android:text="@string/name"
                 android:textAlignment="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <View
@@ -56,8 +56,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="36dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -74,20 +74,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Gender"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+                    android:text="@string/gender"
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:clickable="true"
-                    android:text="Male"
+                    android:text="@string/test"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+                    android:textSize="16sp"
+                    android:focusable="true" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -104,19 +107,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Date of Birth"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+                    android:text="@string/date_of_birth"
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/dob"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="December 3, 2000"
+                    android:text="@string/test"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -133,19 +139,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Height"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+                    android:text="@string/height"
+
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/height"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="167 cm"
+                    android:text="@string/height_value"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/cm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:clickable="true"
+                    android:text="@string/cm"
+                    android:textAlignment="viewEnd"
+
+                    android:textSize="16sp"
+                    android:focusable="true" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -161,19 +182,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Weight"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+                    android:text="@string/weight"
+
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="60.2 kg"
+                    android:text="@string/weight_value"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/kg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:clickable="true"
+                    android:text="@string/kg"
+                    android:textAlignment="viewEnd"
+
+                    android:textSize="16sp"
+                    android:focusable="true" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -187,8 +223,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="36dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -215,11 +251,11 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1.0"
                     android:background="@color/colorBlack"
-                    android:text="Setting"
+                    android:text="@string/setting"
                     android:textAlignment="viewStart"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -245,11 +281,11 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1.0"
                     android:background="@color/colorBlack"
-                    android:text="About"
+                    android:text="@string/about"
                     android:textAlignment="viewStart"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -274,11 +310,11 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1.0"
                     android:background="@color/colorBlack"
-                    android:text="Log out"
+                    android:text="@string/log_out"
                     android:textAlignment="viewStart"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

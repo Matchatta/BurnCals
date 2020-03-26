@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Burn cals</string>
+    <string name="kg">kg</string>
+    <string name="name">Matchatta Toyaem</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="date">December 3, 2000</string>
+    <string name="height">Height</string>
+    <string name="height_value">167</string>
+    <string name="cm">cm</string>
+    <string name="weight">Weight</string>
+    <string name="weight_value">60.2</string>
+    <string name="setting">Setting</string>
+    <string name="about">About</string>
+    <string name="log_out">Log out</string>
+    <string name="female">Female</string>
+    <string name="test">test</string>
+    <string name="food_calories">Food Calories</string>
+    <string name="unit">kcals</string>
+    <string name="carbohydrate">Carbohydrate</string>
 </resources>

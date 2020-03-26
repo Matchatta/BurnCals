@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".RegisterActivity"
+    tools:context=".ui.RegisterActivity"
     android:background="@color/colorBlack">
 
     <LinearLayout
@@ -46,18 +46,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:text="Gender"
-                    android:textColor="@color/colorWhite"
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Male"
+                    android:text="@string/male"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+                    android:clickable="true"
+
+                    android:textSize="16sp"
+                    android:focusable="true" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -75,18 +80,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:text="Date of Birth"
-                    android:textColor="@color/colorWhite"
+
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/dob"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:text="December 3, 2000"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp" />
+
+                    android:clickable="true"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -106,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:text="Height"
-                    android:textColor="@color/colorWhite"
+
                     android:textSize="16dp" />
 
                 <TextView
@@ -117,7 +127,7 @@
                     android:clickable="true"
                     android:text="0"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
+
                     android:textSize="16dp" />
 
                 <TextView
@@ -128,8 +138,12 @@
                     android:clickable="true"
                     android:text="cm"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
+
                     android:textSize="16dp" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -148,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:text="Weight"
-                    android:textColor="@color/colorWhite"
+
                     android:textSize="16dp" />
 
                 <TextView
@@ -159,7 +173,7 @@
                     android:clickable="true"
                     android:text="0"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
+
                     android:textSize="16dp" />
 
                 <TextView
@@ -169,8 +183,12 @@
                     android:layout_marginLeft="5dp"
                     android:text="kg"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/colorWhite"
+
                     android:textSize="16dp" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <Button
@@ -182,7 +200,7 @@
                 android:background="@drawable/box2"
                 android:text="Register"
                 android:textAllCaps="false"
-                android:textColor="@color/colorWhite" />
+                 />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
