@@ -20,7 +20,9 @@ import com.example.wireless_project.ui.model.FoodViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.dialogfragment.*
 import kotlinx.android.synthetic.main.fragment_add_food.*
+import kotlinx.android.synthetic.main.fragment_add_food.cancel
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -59,7 +61,7 @@ class AddFood : Fragment() {
             val card = carbohydrate.text.toString().toDouble()
             val protein = protien.text.toString().toDouble()
             val fat = fat.text.toString().toDouble()
-            val location = "Mac"
+            val location = location.text.toString()
             val calendar =Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)

@@ -60,6 +60,7 @@ class FoodActivity : Fragment(){
                     DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, dayOfMonth ->
                         addDate = ("$dayOfMonth/$mMonth/$mYear")
                         val filter = foodList.filter { it.addedDate == addDate }
+                        date.text = addDate
                         setData(ArrayList(filter))
                     }, year, month, day
                 )
