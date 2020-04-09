@@ -19,4 +19,16 @@
     <string name="food_calories">Food Calories</string>
     <string name="unit">kcals</string>
     <string name="carbohydrate">Carbohydrate</string>
+    <string name="exercises">Exercises</string>
+    <string name="delete">Delete</string>
+    <string name="no">NO</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">confirm</string>
+    <string name="delete_check">Do you want to delete?</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="yes">YES</string>
+    <string name="burned_calories">Burned calories</string>
+    <string name="run">Run</string>
+    <string name="burned_cals">Burned Cals</string>
 </resources>

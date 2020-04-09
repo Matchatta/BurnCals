@@ -69,7 +69,7 @@ class AddFood : Fragment() {
             val addDate = "$day/$month/$year"
             val stream = ByteArrayOutputStream()
             val img:Bitmap? = imm.drawable.toBitmap()
-            img?.compress(Bitmap.CompressFormat.PNG, 90, stream)
+            img?.compress(Bitmap.CompressFormat.PNG, 100, stream)
             val image = stream.toByteArray()
             val food = Food(userEmail = email, name = name, carb = card, protein = protein, fat = fat,pic = image, location = location, addedDate = addDate)
             disposable.add(viewModel.insertFood(food)
@@ -98,10 +98,8 @@ class AddFood : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            val resize = Bitmap.createScaledBitmap(imageBitmap, addPicture.width, addPicture.height, false)
-            imm.layoutParams.width = WRAP_CONTENT
-            imm.layoutParams.height = WRAP_CONTENT
-            imm.setImageBitmap(resize)
+            imm.layoutParams.width = MATCH_PARENT
+            imm.setImageBitmap(imageBitmap)
         }
     }
 

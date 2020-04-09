@@ -2,19 +2,21 @@ package com.example.wireless_project.database
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
+import com.example.wireless_project.database.dao.ExercisesDao
 import com.example.wireless_project.database.dao.FoodDao
 import com.example.wireless_project.database.dao.UserDao
+import com.example.wireless_project.database.entity.Exercises
 import com.example.wireless_project.database.entity.Food
 import com.example.wireless_project.database.entity.User
 
-@Database(entities = [User::class, Food::class], version = 1)
+@Database(entities = [User::class, Food::class, Exercises::class], version = 1)
 
 abstract class DatabaseConnector: RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun foodDao(): FoodDao
+    abstract fun exercisesDao(): ExercisesDao
     companion object {
         @Volatile private var INSTANCE: DatabaseConnector? = null
         fun getInstance(context: Context): DatabaseConnector =

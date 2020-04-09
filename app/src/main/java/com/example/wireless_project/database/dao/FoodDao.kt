@@ -11,12 +11,12 @@ interface FoodDao {
     fun insertFood(food: Food) : Completable
 
     @Update
-    fun updateFood(food: Food)
+    fun updateFood(food: Food) : Completable
 
     @Delete
-    fun deleteFood(food: Food)
+    fun deleteFood(food: Food) : Completable
 
     @Query("SELECT * FROM Food WHERE userEmail == :email")
-    fun getFoodByDate(email: String): Flowable<List<Food>>
+    fun getFood(email: String): Flowable<List<Food>>
 
 }

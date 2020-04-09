@@ -58,9 +58,10 @@ class FoodActivity : Fragment(){
                 DatePickerDialog(
                     it1, R.style.DialogTheme,
                     DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, dayOfMonth ->
+                        val month = mMonth+1
                         addDate = ("$dayOfMonth/$mMonth/$mYear")
                         val filter = foodList.filter { it.addedDate == addDate }
-                        date.text = addDate
+                        date.text = ("$dayOfMonth/$month/$mYear")
                         setData(ArrayList(filter))
                     }, year, month, day
                 )
@@ -72,7 +73,7 @@ class FoodActivity : Fragment(){
         val viewModel = MainActivity.getFoodDataSource()
 
         val email = MainActivity.userInformation?.email.toString()
-        disposable.add(viewModel.getFoodByDate(email)
+        disposable.add(viewModel.getFood(email)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError { Log.d("ERROR62", it.toString()) }
