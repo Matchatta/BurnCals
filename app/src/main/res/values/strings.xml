@@ -46,4 +46,5 @@
     <string name="carb">Carb.</string>
     <string name="remaining">Remaining</string>
     <string name="type">Type</string>
+    <string name="health">Health</string>
 </resources>
