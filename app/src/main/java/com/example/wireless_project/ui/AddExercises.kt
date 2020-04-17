@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.widget.ArrayAdapter
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import com.example.wireless_project.R
@@ -34,11 +35,22 @@ class AddExercises : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUI()
         setOnClick()
     }
     companion object{
         fun newInstance(): AddExercises =
             AddExercises()
+    }
+    fun setUI(){
+        var dropDown = exercisesType
+        val run = resources.getString(R.string.run)
+        val walk = resources.getString(R.string.walk)
+        val cycling = resources.getString(R.string.cycle)
+        val other = resources.getString(R.string.other)
+        val items = arrayOf(run, walk, cycling, other)
+        val adapterArray = context?.let { ArrayAdapter(it, R.layout.spinner_layout, items) }
+        dropDown.adapter = adapterArray
     }
     private fun openFoodFragment(){
         val fragmentManager = activity?.supportFragmentManager
@@ -54,6 +66,7 @@ class AddExercises : Fragment() {
         save.setOnClickListener {
             val email = MainActivity.userInformation?.email.toString()
             val name = exercisesName.text.toString()
+            val type = exercisesType.selectedItem.toString()
             val cals = cals.text.toString().toDouble()
             val location = location.text.toString()
             val calendar =Calendar.getInstance()
@@ -65,7 +78,7 @@ class AddExercises : Fragment() {
             val img:Bitmap? = imm.drawable.toBitmap()
             img?.compress(Bitmap.CompressFormat.PNG, 100, stream)
             val image = stream.toByteArray()
-            val exercises = Exercises(null, email, name, cals, addDate, image, location)
+            val exercises = Exercises(null, email, name, type,cals, addDate, image, location)
             disposable.add(viewModel.insertExercises(exercises)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

@@ -74,7 +74,11 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.4.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //card view
-    implementation "androidx.cardview:cardview:1.0.0"
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+//    implementation 'com.github.VaibhavLakhera:Circular-Progress-View:0.1.0'
+    implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
+
 
 }

@@ -5,6 +5,8 @@
     <color name="transparent">#4FFFFFFF</color>
     <color name="colorPrimary">#ffff814d</color>
     <color name="colorPrimaryDarker">#EC4313</color>
+    <color name="colorPrimaryDarker2">#CA5C3D</color>
+    <color name="colorPrimaryDarkerTransparent">#79CA5C3D</color>
     <color name="colorWhite">#ffffffff</color>
     <color name="clear">#00FFFFFF</color>
 </resources>

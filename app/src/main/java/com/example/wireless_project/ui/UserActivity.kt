@@ -1,29 +1,19 @@
 package com.example.wireless_project.ui
 
-import android.content.Context
-import android.graphics.BitmapFactory
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.wireless_project.R
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.fragment_record.*
-import kotlinx.android.synthetic.main.fragment_record.sign_out_button
 import kotlinx.android.synthetic.main.fragment_user.*
-import java.net.URL
 
 
 class UserActivity : Fragment(){
 
     private var name: String? = null
-    private val disposable = CompositeDisposable()
     companion object{
         const val ARG_NAME = "name"
         const val ARG_WEIGHT = "weight"

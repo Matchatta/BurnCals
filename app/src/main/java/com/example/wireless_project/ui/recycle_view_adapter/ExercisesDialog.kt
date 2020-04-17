@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
@@ -19,6 +20,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.exercises_dialog.*
+import kotlinx.android.synthetic.main.exercises_dialog.cals
+import kotlinx.android.synthetic.main.exercises_dialog.cancel
+import kotlinx.android.synthetic.main.exercises_dialog.exercisesName
+import kotlinx.android.synthetic.main.exercises_dialog.exercisesType
+import kotlinx.android.synthetic.main.exercises_dialog.location
+import kotlinx.android.synthetic.main.exercises_dialog.save
+import kotlinx.android.synthetic.main.fragment_add_exercises.*
 
 class ExercisesDialog: DialogFragment() {
     val viewModel : ExercisesViewModel = MainActivity.getExercisesSource()
@@ -43,6 +51,15 @@ class ExercisesDialog: DialogFragment() {
     }
 
     private fun setUI() {
+        var dropDown = exercisesType
+        val run = resources.getString(R.string.run)
+        val walk = resources.getString(R.string.walk)
+        val cycling = resources.getString(R.string.cycle)
+        val other = resources.getString(R.string.other)
+        val items = arrayOf(run, walk, cycling, other)
+        val adapterArray = context?.let { ArrayAdapter(it, R.layout.spinner_layout, items) }
+        dropDown.adapter = adapterArray
+        dropDown.setSelection(items.indexOf(exercises.type))
         exercisesName.setText(exercises.name, TextView.BufferType.EDITABLE)
         location.setText(exercises.location, TextView.BufferType.EDITABLE)
         cals.setText(exercises.cals.toString(), TextView.BufferType.EDITABLE)
@@ -51,6 +68,8 @@ class ExercisesDialog: DialogFragment() {
             val image = BitmapFactory.decodeByteArray(exercises.pic, 0, size)
             exercisesImage.setImageBitmap(image)
         }
+
+
     }
 
     override fun onCreateView(
@@ -64,6 +83,7 @@ class ExercisesDialog: DialogFragment() {
             exercises.name = exercisesName.text.toString()
             exercises.location = location.text.toString()
             exercises.cals = cals.text.toString().toDouble()
+            exercises.type = exercisesType.selectedItem.toString()
             disposable.add(viewModel.updateExercises(exercises)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

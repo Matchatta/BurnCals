@@ -31,4 +31,19 @@
     <string name="burned_calories">Burned calories</string>
     <string name="run">Run</string>
     <string name="burned_cals">Burned Cals</string>
+    <string name="record">Record</string>
+    <string name="add_exercises">Add Exercises</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="eating">Eating</string>
+    <string name="walk">Walk</string>
+    <string name="cycle">Cycle</string>
+    <string name="other">Other</string>
+    <string name="total">Total</string>
+    <string name="fat">Fat</string>
+    <string name="protein">Protein</string>
+    <string name="carb">Carb.</string>
+    <string name="remaining">Remaining</string>
+    <string name="type">Type</string>
 </resources>

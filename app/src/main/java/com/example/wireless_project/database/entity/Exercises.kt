@@ -14,6 +14,7 @@ data class Exercises(
     @PrimaryKey(autoGenerate = true) var id: Int?,
     @ColumnInfo(name = "userEmail") var userEmail: String,
     @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "type") var type: String,
     @ColumnInfo(name = "Calories") var cals: Double,
     @ColumnInfo(name="date") var addedDate: String,
     @ColumnInfo(name="picture") var pic: ByteArray? =null,

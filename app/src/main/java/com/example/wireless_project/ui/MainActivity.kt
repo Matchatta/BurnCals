@@ -14,12 +14,15 @@ import com.example.wireless_project.ui.model.ExercisesViewModel
 import com.example.wireless_project.ui.model.FoodModelFactory
 import com.example.wireless_project.ui.model.FoodViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
+import java.io.IOException
 
 class MainActivity : AppCompatActivity(){
 
     companion object{
         lateinit var foodViewModel : FoodViewModel
         lateinit var exercisesViewModel : ExercisesViewModel
+        lateinit var context: Context
         var userInformation : User? =null
         fun getLaunchIntent(from: Context, userInfo: User?) : Intent {
             userInformation = userInfo
@@ -30,6 +33,21 @@ class MainActivity : AppCompatActivity(){
         }
         fun getExercisesSource(): ExercisesViewModel{
             return exercisesViewModel
+        }
+        fun getJSONData(): Configuration{
+            var conf = Configuration()
+            try{
+                val json= context.assets?.open("configuration.json")?.bufferedReader().use {
+                    it?.readText()
+                }
+                val gson = Gson()
+                conf = gson.fromJson(json, Configuration::class.java)
+
+
+            }catch (exception: IOException){
+                exception.printStackTrace()
+            }
+            return conf
         }
     }
     private lateinit var viewFoodModelFactory: FoodModelFactory
@@ -45,6 +63,7 @@ class MainActivity : AppCompatActivity(){
         viewExercisesModelFactory = Injection.provideExercisesViewModelFactory(this)
         foodViewModel = viewFoodModel
         exercisesViewModel = viewExercisesModel
+        context = this
         setContentView(R.layout.activity_main)
         val healthActivity = HealthActivity.newInstance()
         openFragment(healthActivity)
@@ -71,7 +90,7 @@ class MainActivity : AppCompatActivity(){
             }
             R.id.navigation_record -> {
                 val recordActivity =
-                    RecordActivity.newInstance()
+                    RecordActivity.newInstance(userInformation!!.email)
                 openFragment(recordActivity)
                 return@OnNavigationItemSelectedListener true
             }
@@ -99,6 +118,17 @@ class MainActivity : AppCompatActivity(){
         transaction.commit()
     }
 
-
+    class Configuration(){
+        private var maxEating: Double = 0.0
+        private var goalExercises: Double = 0.0
+        fun getMaxEating() = maxEating
+        fun getGoalExercises() = goalExercises
+        fun setGoalExercises(goal: Double){
+            goalExercises = goal
+        }
+        fun setMaxEating(max: Double){
+            maxEating = max
+        }
+    }
 
 }
