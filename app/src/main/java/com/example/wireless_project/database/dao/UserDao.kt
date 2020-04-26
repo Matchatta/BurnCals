@@ -11,7 +11,7 @@ interface UserDao {
     fun insertUser(user: User) : Completable
 
     @Update
-    fun updateGender(user: User)
+    fun updateUser(user: User): Completable
 
     @Delete
     fun deleteUser(user: User)

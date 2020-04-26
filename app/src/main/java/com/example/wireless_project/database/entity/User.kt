@@ -9,9 +9,9 @@ data class User (
     @PrimaryKey val email : String,
     @ColumnInfo(name = "first_name") val first_name : String?,
     @ColumnInfo(name = "last_name") val last_name : String?,
-    @ColumnInfo(name = "weight") val weight : Double?,
-    @ColumnInfo(name = "height") val height : Double?,
+    @ColumnInfo(name = "weight") var weight : Double?,
+    @ColumnInfo(name = "height") var height : Double?,
     @ColumnInfo(name = "image") val image : String?,
-    @ColumnInfo(name = "gender") val gender : String?,
-    @ColumnInfo(name = "date_of_birth") val dob : String?
+    @ColumnInfo(name = "gender") var gender : Int?,
+    @ColumnInfo(name = "date_of_birth") var dob : String?
 )

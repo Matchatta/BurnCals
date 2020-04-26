@@ -33,8 +33,8 @@ class GenderDialog: DialogFragment() {
 
     private fun setUp(){
         summit.setOnClickListener {
-            var radioId = gender.checkedRadioButtonId
-            var radioButton = view?.findViewById<RadioButton>(radioId)
+            val radioId = gender.checkedRadioButtonId
+            val radioButton = view?.findViewById<RadioButton>(radioId)
             if (radioButton != null) {
                 mOnInputGenderListener?.sendGender(radioButton.text.toString())
             }

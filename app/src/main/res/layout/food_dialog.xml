@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Name"
+                    android:text="@string/name_field"
                     android:textSize="16sp" />
 
                 <EditText
@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Location"
+                    android:text="@string/location"
 
                     android:textSize="16sp" />
 
@@ -160,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Protein"
+                    android:text="@string/protein"
                     android:textSize="16sp" />
 
                 <EditText
@@ -209,7 +209,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Fat"
+                    android:text="@string/fat"
                     android:textSize="16sp" />
 
                 <EditText

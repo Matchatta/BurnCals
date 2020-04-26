@@ -2,8 +2,8 @@ package com.example.wireless_project.ui
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Food
 import com.example.wireless_project.ui.recycle_view_adapter.FoodAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_food.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -25,25 +23,27 @@ class FoodActivity : Fragment(){
     private val year = calendar.get(Calendar.YEAR)
     private val month = calendar.get(Calendar.MONTH)
     private val day = calendar.get(Calendar.DATE)
-    private lateinit var foodList: List<Food>
-    private var addDate = "$day/$month/$year"
+    private var addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
     private lateinit var foodAdapter : FoodAdapter
     private lateinit var foodContext: Context
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_food, container, false)
+    ): View? {
+        return inflater.inflate(R.layout.fragment_food, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        act = this
         setOnClick()
+        setRecycleView()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         foodContext = context
-        setRecycleView()
     }
     private fun setOnClick() {
         add_food.setOnClickListener {
@@ -58,11 +58,12 @@ class FoodActivity : Fragment(){
                 DatePickerDialog(
                     it1, R.style.DialogTheme,
                     DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, dayOfMonth ->
-                        val month = mMonth+1
-                        addDate = ("$dayOfMonth/$mMonth/$mYear")
-                        val filter = foodList.filter { it.addedDate == addDate }
-                        date.text = ("$dayOfMonth/$month/$mYear")
-                        setData(ArrayList(filter))
+                        calendar.set(mYear, mMonth, dayOfMonth)
+                        addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
+                        //val filter = foodList.filter { it.addedDate == addDate }
+                        date.text = SimpleDateFormat("MMMM dd, yyyy").format(calendar.time)
+                        //setData(ArrayList(filter))
+                        setRecycleView()
                     }, year, month, day
                 )
             }?.show()
@@ -70,33 +71,32 @@ class FoodActivity : Fragment(){
     }
 
     private fun setRecycleView(){
-        val viewModel = MainActivity.getFoodDataSource()
-
-        val email = MainActivity.userInformation?.email.toString()
-        disposable.add(viewModel.getFood(email)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError { Log.d("ERROR62", it.toString()) }
-            .subscribe {
-                foodList = it
-                setData(ArrayList(foodList.filter { it1 -> it1.addedDate== addDate}))
-            })
-
-    }
-    private fun setData(foodList: ArrayList<Food>){
-        foodAdapter = FoodAdapter(foodList)
+        foodAdapter = FoodAdapter(ArrayList(foodList.filter { it.addedDate == addDate }))
         try {
             recycleView.apply {
                 layoutManager = GridLayoutManager(foodContext, 1, GridLayoutManager.VERTICAL, false)
                 isNestedScrollingEnabled = false
                 adapter = foodAdapter
                 onFlingListener= null
+                foodAdapter.notifyDataSetChanged()
             }
         }
         catch (e: Exception){ }
-        foodAdapter.notifyDataSetChanged()
+
     }
+
     companion object{
-        fun newInstance(): FoodActivity = FoodActivity()
+        lateinit var foodList: MutableList<Food>
+        lateinit var act: FoodActivity
+        fun newInstance(list: MutableList<Food>): FoodActivity {
+            foodList = list
+            return FoodActivity()
+        }
+        fun deleteData(food: Food){
+            val index = foodList.indexOf(food)
+            foodList.removeAt(index)
+            act.foodAdapter.notifyItemRemoved(index)
+            act.setRecycleView()
+        }
     }
 }

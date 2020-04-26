@@ -3,8 +3,10 @@ package com.example.wireless_project.ui
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -52,39 +54,51 @@ class AddExercises : Fragment() {
         val adapterArray = context?.let { ArrayAdapter(it, R.layout.spinner_layout, items) }
         dropDown.adapter = adapterArray
     }
-    private fun openFoodFragment(){
+    private fun openPreviousFragment(){
         val fragmentManager = activity?.supportFragmentManager
-        val transaction = fragmentManager?.beginTransaction()
-        transaction?.replace(R.id.container, ExercisesActivity.newInstance())
-        transaction?.addToBackStack(null)
-        transaction?.commit()
+        fragmentManager?.popBackStack()
     }
     private fun setOnClick() {
         cancel.setOnClickListener {
-            openFoodFragment()
+            openPreviousFragment()
         }
         save.setOnClickListener {
-            val email = MainActivity.userInformation?.email.toString()
-            val name = exercisesName.text.toString()
-            val type = exercisesType.selectedItem.toString()
-            val cals = cals.text.toString().toDouble()
-            val location = location.text.toString()
-            val calendar =Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DATE)
-            val addDate = "$day/$month/$year"
-            val stream = ByteArrayOutputStream()
-            val img:Bitmap? = imm.drawable.toBitmap()
-            img?.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            val image = stream.toByteArray()
-            val exercises = Exercises(null, email, name, type,cals, addDate, image, location)
-            disposable.add(viewModel.insertExercises(exercises)
+            if (exercisesName.text.isEmpty()||cals.text.isEmpty()||location.text.isEmpty()){
+                if(exercisesName.text.isEmpty()){
+                    exercisesName.error = getString(R.string.empty_message)
+                    exercisesName.requestFocus()
+                }
+                if(location.text.isEmpty()){
+                    location.error = getString(R.string.empty_message)
+                    location.requestFocus()
+                }
+                if(cals.text.isEmpty()){
+                    cals.error = getString(R.string.empty_message)
+                    cals.requestFocus()
+                }
+            }
+            else{
+                val email = MainActivity.userInformation?.email.toString()
+                val name = exercisesName.text.toString()
+                val type = exercisesType.selectedItem.toString()
+                val cals = cals.text.toString().toDouble()
+                val location = location.text.toString()
+                val calendar = Calendar.getInstance()
+                val addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
+                val stream = ByteArrayOutputStream()
+                val img:Bitmap? = imm.drawable.toBitmap()
+                img?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                val image = Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT)
+                val exercises = Exercises( userEmail =  email, name =  name, type = type, cals = cals,addedDate =  addDate,pic =  image,location =  location)
+                disposable.add(viewModel.insertExercises(exercises)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnComplete { openFoodFragment() }
+                    .doOnComplete {
+                        ExercisesActivity.exercisesList.add(exercises)
+                        openPreviousFragment()}
                     .subscribe { Log.d("SUCCESS", "Good job")})
 
+            }
         }
         addPicture.setOnClickListener{
             dispatchTakePictureIntent()

@@ -1,15 +1,16 @@
 package com.example.wireless_project.ui.recycle_view_adapter
 
 import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Food
 import kotlinx.android.synthetic.main.food_cardview.view.*
-import androidx.fragment.app.FragmentActivity
 
 class FoodAdapter(private var items: ArrayList<Food>): RecyclerView.Adapter<FoodAdapter.ViewHolder>() {
     lateinit var con : FragmentActivity
@@ -26,14 +27,15 @@ class FoodAdapter(private var items: ArrayList<Food>): RecyclerView.Adapter<Food
             itemView.apply {
                 food.text = item.name
                 location.text = item.location
-                var totalCal = (item.carb*4 )+( item.fat*9) +(item.protein*4)
+                val totalCal = (item.carb*4 )+( item.fat*9) +(item.protein*4)
                 var size =0
                 if(item.pic!= null){
-                    size = item.pic!!.size
-                    val image = BitmapFactory.decodeByteArray(item.pic, 0, size)
+                    val img = Base64.decode(item.pic, Base64.DEFAULT)
+                    size = img.size
+                    val image = BitmapFactory.decodeByteArray(img, 0, size)
                     foodImage.setImageBitmap(image)
                 }
-                cals.text = totalCal.toString()
+                cals.text = String.format("%.1f", totalCal)
             }
             itemView.setOnClickListener {
                 val fragmentTransaction = con.supportFragmentManager.beginTransaction()

@@ -6,8 +6,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp"
@@ -21,7 +21,7 @@
             android:id="@+id/title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Add Food"
+            android:text="@string/add_food"
             android:textSize="24sp" />
 
         <FrameLayout
@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Name"
+                    android:text="@string/name_field"
                     android:textSize="16dp" />
 
                 <EditText
@@ -76,7 +76,7 @@
                     android:hint="food"
                     android:textColor="@color/colorWhite"
                     android:layout_marginEnd="3dp"
-                    android:textColorHint="@color/colorWhite"
+                    android:textColorHint="@color/colorHint"
                     android:background="@null"
                     android:textSize="16sp"
                     android:focusable="true" />
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Location"
+                    android:text="@string/location"
 
                     android:textSize="16dp" />
 
@@ -112,7 +112,7 @@
                     android:clickable="true"
                     android:hint="Thailand"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
+                    android:textColorHint="@color/colorHint"
                     android:textAlignment="viewEnd"
                     android:background="@null"
                     android:textSize="16sp"
@@ -149,7 +149,7 @@
                     android:clickable="true"
                     android:hint="0.0"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
+                    android:textColorHint="@color/colorHint"
                     android:textAlignment="viewEnd"
                     android:inputType="numberDecimal"
                     android:background="@null"
@@ -187,7 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Protein"
+                    android:text="@string/protein"
                     android:textSize="16sp" />
 
                 <EditText
@@ -199,7 +199,7 @@
                     android:hint="0.0"
                     android:textColor="@color/colorWhite"
 
-                    android:textColorHint="@color/colorWhite"
+                    android:textColorHint="@color/colorHint"
                     android:textAlignment="viewEnd"
                     android:inputType="numberDecimal"
                     android:background="@null"
@@ -235,7 +235,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Fat"
+                    android:text="@string/fat"
                     android:textSize="16sp" />
 
                 <EditText
@@ -247,7 +247,7 @@
                     android:hint="0.0"
                     android:textColor="@color/colorWhite"
 
-                    android:textColorHint="@color/colorWhite"
+                    android:textColorHint="@color/colorHint"
                     android:textAlignment="viewEnd"
                     android:inputType="numberDecimal"
                     android:background="@null"
@@ -279,7 +279,7 @@
                     android:layout_height="30dp"
                     android:background="@drawable/box2"
                     android:layout_marginEnd="10dp"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textAllCaps="false"
                     />
                 <Button
@@ -287,7 +287,7 @@
                     android:layout_width="70dp"
                     android:layout_height="30dp"
                     android:background="@drawable/box2"
-                    android:text="Save"
+                    android:text="@string/save"
                     android:textAllCaps="false"
                     />
             </LinearLayout>

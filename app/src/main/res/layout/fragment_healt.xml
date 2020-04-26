@@ -51,6 +51,7 @@
                         app:cpb_progress_direction="to_right"
                         app:cpb_progressbar_color="@color/colorWhite"
                         app:cpb_progressbar_width="10dp"
+                        app:cpb_progress="100"
                         app:cpb_progress_max = "100"
                         app:cpb_round_border="true" />
                     <LinearLayout
@@ -95,7 +96,7 @@
                         app:cpb_progress_direction="to_right"
                         app:cpb_progressbar_color="@color/colorWhite"
                         app:cpb_progressbar_width="10dp"
-                        app:cpb_progress="20"
+                        app:cpb_progress="100"
                         app:cpb_progress_max = "100"
                         app:cpb_round_border="true" />
                     <LinearLayout
@@ -172,6 +173,36 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/box">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:weightSum="4"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/weight"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/weight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:text="@string/test"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="36sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="bottom"
+                            android:text="@string/kg"
+                            android:textSize="20sp" />
+                    </LinearLayout>
                 </FrameLayout>
                 <FrameLayout
                     android:layout_marginStart="7dp"
@@ -179,6 +210,38 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/box">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:weightSum="4"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/bmi"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/bmi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:text="@string/test"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="36sp" />
+                        <TextView
+                            android:id="@+id/shape"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/test"
+                            android:gravity="bottom"
+                            android:layout_gravity="center"
+                            android:textSize="16sp" />
+                    </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
             <LinearLayout
@@ -195,12 +258,36 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/box">
-                    <TextView
-                        android:layout_marginTop="15dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/test"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:weightSum="4"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/excess_calories"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/excess"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:text="@string/test"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="36sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="bottom"
+                            android:text="@string/unit"
+                            android:textSize="20sp" />
+                    </LinearLayout>
                 </FrameLayout>
                 <FrameLayout
                     android:layout_marginStart="7dp"
@@ -208,6 +295,36 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/box">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:weightSum="4"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/exercises_time"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/need_exercises"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:text="@string/test"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="36sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="bottom"
+                            android:text="@string/minute"
+                            android:textSize="20sp" />
+                    </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>

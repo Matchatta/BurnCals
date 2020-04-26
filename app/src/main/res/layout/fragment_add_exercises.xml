@@ -49,43 +49,6 @@
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="25dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/rectangle"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:text="Name"
-                    android:textSize="16dp" />
-
-                <EditText
-                    android:id="@+id/exercisesName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:textAlignment="viewEnd"
-                    android:clickable="true"
-                    android:hint="@string/run"
-                    android:textColor="@color/colorWhite"
-                    android:layout_marginEnd="3dp"
-                    android:textColorHint="@color/colorWhite"
-                    android:background="@null"
-                    android:textSize="16sp"
-                    android:focusable="true" />
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_edit_black_24dp"/>
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="25dp"
@@ -127,13 +90,50 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="@string/name_field"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/exercisesName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:textAlignment="viewEnd"
+                    android:clickable="true"
+                    android:hint="@string/run"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginEnd="3dp"
+                    android:textColorHint="@color/colorHint"
+                    android:background="@null"
+                    android:textSize="16sp"
+                    android:focusable="true" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit_black_24dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/rectangle"
+                android:orientation="horizontal">
+
+                <TextView
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Location"
+                    android:text="@string/location"
 
-                    android:textSize="16dp" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/location"
@@ -143,7 +143,7 @@
                     android:clickable="true"
                     android:hint="Thailand"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
+                    android:textColorHint="@color/colorHint"
                     android:textAlignment="viewEnd"
                     android:background="@null"
                     android:textSize="16sp"
@@ -180,7 +180,7 @@
                     android:clickable="true"
                     android:hint="0.0"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
+                    android:textColorHint="@color/colorHint"
                     android:textAlignment="viewEnd"
                     android:inputType="numberDecimal"
                     android:background="@null"
@@ -216,7 +216,7 @@
                     android:layout_height="30dp"
                     android:background="@drawable/box2"
                     android:layout_marginEnd="10dp"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textAllCaps="false"
                     />
                 <Button
@@ -224,7 +224,7 @@
                     android:layout_width="70dp"
                     android:layout_height="30dp"
                     android:background="@drawable/box2"
-                    android:text="Save"
+                    android:text="@string/save"
                     android:textAllCaps="false"
                     />
             </LinearLayout>

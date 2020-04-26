@@ -18,6 +18,6 @@ data class Food (
     var protein: Double,
     var fat: Double,
     var location: String,
-    @ColumnInfo(name="picture") var pic: ByteArray? =null,
+    @ColumnInfo(name="picture") var pic: String? =null,
     @ColumnInfo(name="date") var addedDate: String
 )

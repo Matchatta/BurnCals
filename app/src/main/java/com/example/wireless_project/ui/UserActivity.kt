@@ -1,38 +1,35 @@
 package com.example.wireless_project.ui
 
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.wireless_project.R
-import io.reactivex.disposables.CompositeDisposable
+import com.example.wireless_project.database.entity.User
 import kotlinx.android.synthetic.main.fragment_user.*
 
 
 class UserActivity : Fragment(){
 
     private var name: String? = null
+
     companion object{
-        const val ARG_NAME = "name"
-        const val ARG_WEIGHT = "weight"
-        const val ARG_HEIGHT = "height"
-        const val ARG_IMAGE = "image"
-        const val ARG_GENDER = "gender"
-        const val ARG_DOB = "dob"
-        fun newInstance(name: String?, weight: String?, height: String?, image: String?, gender: String?, dob: String?): UserActivity{
-            val fragment = UserActivity()
-            val bundle = Bundle().apply {
-                putString(ARG_NAME, name)
-                putString(ARG_WEIGHT, weight)
-                putString(ARG_HEIGHT, height)
-                putString(ARG_IMAGE, image)
-                putString(ARG_GENDER, gender)
-                putString(ARG_DOB, dob)
+        private lateinit var act : UserActivity
+        lateinit var user: User
+        fun newInstance(user: User?): UserActivity{
+            if (user != null) {
+                this.user = user
             }
-            fragment.arguments = bundle
-            return fragment
+            return UserActivity()
+        }
+        fun updateUser(user: User){
+            this.user =user
+            act.setupUI()
         }
     }
     override fun onCreateView(
@@ -45,6 +42,7 @@ class UserActivity : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        act = this
         setupUI()
     }
 
@@ -52,21 +50,44 @@ class UserActivity : Fragment(){
         sign_out_button.setOnClickListener {
             signOut()
         }
-        Glide.with(activity).load(arguments?.getString(ARG_IMAGE)).into(userImage)
-        userName.text = arguments?.getString(ARG_NAME)
-        height.text = arguments?.getString(ARG_HEIGHT)
-        weight.text = arguments?.getString(ARG_WEIGHT)
-        gender.text = arguments?.getString(ARG_GENDER)
+        Glide.with(activity).load(user.image).into(userImage)
+        userName.text = (user.first_name +" "+user.last_name)
+        height.text = String.format("%.1f", user.height)
+        weight.text = String.format("%.1f", user.weight)
+        var gen = getString(R.string.male)
+        if(user.gender == 1){
+            gen = getString(R.string.female)
+        }
+        gender.text = gen
         dob.text = getFormatDate()
+        edit.setOnClickListener {
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            val dialog: DialogFragment = UserDialog.newInstance(user)
+            dialog.show(fragmentTransaction!!, dialog.javaClass::getSimpleName.toString())
+        }
+        setting_button.setOnClickListener {
+            val fragmentManager = activity?.supportFragmentManager
+            val transaction = fragmentManager?.beginTransaction()
+            transaction?.replace(R.id.container, SettingActivity())
+            transaction?.addToBackStack(null)
+            transaction?.commit()
+        }
+        about_button.setOnClickListener {
+            val fragmentManager = activity?.supportFragmentManager
+            val transaction = fragmentManager?.beginTransaction()
+            transaction?.replace(R.id.container, AboutActivity())
+            transaction?.addToBackStack(null)
+            transaction?.commit()
+        }
     }
     private fun getFormatDate(): String {
-        val MONTH = arrayOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
-        val dob = arguments?.getString(ARG_DOB)?.split("/")
-        val day = dob?.get(0)
-        val numMonth = dob?.get(1)?.toInt()
-        val month = MONTH[numMonth?.minus(1)!!]
-        val year = dob?.get(2)
-        return ("$month $day, $year")
+        val dob = user.dob?.split("/")
+        val day = dob?.get(0)!!.toInt()
+        val numMonth = dob[1].toInt().minus(1)
+        val year = dob[2].toInt()
+        val calendar = Calendar.getInstance()
+        calendar.set(year, numMonth, day)
+        return SimpleDateFormat("MMMM dd, yyyy").format(calendar.time)
     }
     private fun signOut(){
         val mainActivity = activity

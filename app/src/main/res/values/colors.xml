@@ -2,6 +2,7 @@
 <resources>
     <color name="colorBlack">#ff000000</color>
     <color name="colorGray">#ff202020</color>
+    <color name="colorHint">#454545</color>
     <color name="transparent">#4FFFFFFF</color>
     <color name="colorPrimary">#ffff814d</color>
     <color name="colorPrimaryDarker">#EC4313</color>

@@ -11,12 +11,12 @@ import androidx.room.PrimaryKey
     onDelete = ForeignKey.CASCADE)]
 )
 data class Exercises(
-    @PrimaryKey(autoGenerate = true) var id: Int?,
+    @PrimaryKey(autoGenerate = true) var id: Int? =null,
     @ColumnInfo(name = "userEmail") var userEmail: String,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "type") var type: String,
     @ColumnInfo(name = "Calories") var cals: Double,
     @ColumnInfo(name="date") var addedDate: String,
-    @ColumnInfo(name="picture") var pic: ByteArray? =null,
+    @ColumnInfo(name="picture") var pic: String? =null,
     var location: String
 )

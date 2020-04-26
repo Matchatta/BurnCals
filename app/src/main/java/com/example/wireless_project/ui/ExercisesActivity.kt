@@ -2,6 +2,7 @@ package com.example.wireless_project.ui
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,11 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Exercises
-import com.example.wireless_project.database.entity.Food
 import com.example.wireless_project.ui.recycle_view_adapter.ExercisesAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_exercises.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -26,8 +24,7 @@ class ExercisesActivity : Fragment(){
     private val year = calendar.get(Calendar.YEAR)
     private val month = calendar.get(Calendar.MONTH)
     private val day = calendar.get(Calendar.DATE)
-    private lateinit var exercisesList: List<Exercises>
-    private var addDate = "$day/$month/$year"
+    private var addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
     private lateinit var exercisesContext: Context
     private lateinit var exercisesAdapter : ExercisesAdapter
     override fun onCreateView(
@@ -37,13 +34,14 @@ class ExercisesActivity : Fragment(){
     ): View? = inflater.inflate(R.layout.fragment_exercises, container, false)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        act = this
         setOnClick()
+        setRecycle()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         exercisesContext = context
-        setRecycleView()
     }
 
     private fun setOnClick() {
@@ -51,7 +49,7 @@ class ExercisesActivity : Fragment(){
             val fragmentManager = activity?.supportFragmentManager
             val transaction = fragmentManager?.beginTransaction()
             transaction?.replace(R.id.container, AddExercises.newInstance())
-            transaction?.addToBackStack(null)
+            transaction?.addToBackStack("exercises")
             transaction?.commit()
         }
         date_picker.setOnClickListener {
@@ -59,45 +57,42 @@ class ExercisesActivity : Fragment(){
                 DatePickerDialog(
                     it1, R.style.DialogTheme,
                     DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, dayOfMonth ->
-                        val month = mMonth+1
-                        addDate = ("$dayOfMonth/$mMonth/$mYear")
-                        val filter = exercisesList.filter { it.addedDate == addDate }
-                        date.text = ("$dayOfMonth/$month/$mYear")
-                        setData(ArrayList(filter))
+                        calendar.set(mYear, mMonth, dayOfMonth)
+                        addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
+                        //val filter = foodList.filter { it.addedDate == addDate }
+                        date.text = SimpleDateFormat("MMMM dd, yyyy").format(calendar.time)
+                        setRecycle()
                     }, year, month, day
                 )
             }?.show()
         }
     }
-    private fun setRecycleView(){
-        val viewModel = MainActivity.getExercisesSource()
-
-        val email = MainActivity.userInformation?.email.toString()
-        disposable.add(viewModel.getExercises(email)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError { Log.d("ERROR62", it.toString()) }
-            .subscribe {
-                exercisesList = it
-                setData(ArrayList(exercisesList.filter { it1 -> it1.addedDate== addDate}))
-            })
-
-    }
-    private fun setData(exercisesList: ArrayList<Exercises>){
-        exercisesAdapter = ExercisesAdapter(exercisesList)
+    private fun setRecycle(){
+        Log.d("POP", "HI")
+        exercisesAdapter = ExercisesAdapter(ArrayList(exercisesList.filter { it1 -> it1.addedDate== addDate}))
         try {
             recycleView.apply {
                 layoutManager = GridLayoutManager(exercisesContext, 1, GridLayoutManager.VERTICAL, false)
                 isNestedScrollingEnabled = false
                 adapter = exercisesAdapter
                 onFlingListener= null
+                exercisesAdapter.notifyDataSetChanged()
             }
         }
         catch (e: Exception){ }
-        exercisesAdapter.notifyDataSetChanged()
     }
     companion object{
-        fun newInstance(): ExercisesActivity =
-            ExercisesActivity()
+        lateinit var act : ExercisesActivity
+        lateinit var exercisesList: MutableList<Exercises>
+        fun newInstance(list: MutableList<Exercises>): ExercisesActivity {
+            exercisesList = list
+            return ExercisesActivity()
+        }
+        fun deleteData(exercises: Exercises){
+            val index = exercisesList.indexOf(exercises)
+            exercisesList.removeAt(index)
+            act.exercisesAdapter.notifyItemRemoved(index)
+            act.setRecycle()
+        }
     }
 }

@@ -9,9 +9,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wireless_project.Injection
 import com.example.wireless_project.R
+import com.example.wireless_project.database.entity.Exercises
+import com.example.wireless_project.database.entity.Food
 import com.example.wireless_project.database.entity.User
-import com.example.wireless_project.ui.model.UserViewModel
-import com.example.wireless_project.ui.model.ViewModelFactory
+import com.example.wireless_project.ui.model.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -33,7 +34,11 @@ class LoginActivity : AppCompatActivity(){
 
     //Room Database
     private lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewFoodModelFactory: FoodModelFactory
+    private lateinit var viewExercisesModelFactory: ExercisesModelFactory
     private val viewModel: UserViewModel by viewModels{ viewModelFactory}
+    private val viewFoodModel: FoodViewModel by viewModels{viewFoodModelFactory}
+    private val viewExercisesModel: ExercisesViewModel by viewModels{viewExercisesModelFactory}
     private val disposable = CompositeDisposable()
 
     companion object{
@@ -45,12 +50,17 @@ class LoginActivity : AppCompatActivity(){
             mGoogleSignInClient.signOut()
             return Intent(from, LoginActivity::class.java)
         }
+        fun refresh(from: Context): Intent{
+            return Intent(from, LoginActivity::class.java)
+        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_login)
         viewModelFactory = Injection.provideViewModelFactory(this)
+        viewFoodModelFactory = Injection.provideFoodViewModelFactory(this)
+        viewExercisesModelFactory = Injection.provideExercisesViewModelFactory(this)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -127,6 +137,24 @@ class LoginActivity : AppCompatActivity(){
     }
 
     private fun updateUI(user: User){
-        startActivity(MainActivity.getLaunchIntent(this, user))
+        var foodList: MutableList<Food> = mutableListOf()
+        var exercisesList: MutableList<Exercises> = mutableListOf()
+        disposable.add(viewFoodModel.getFood(user!!.email)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if(foodList.isEmpty()){
+                    foodList.addAll(it)
+                }
+            })
+        disposable.add(viewExercisesModel.getExercises(user!!.email)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if(exercisesList.isEmpty()){
+                    exercisesList.addAll(it)
+                }
+                startActivity(MainActivity.getLaunchIntent(this, user, foodList, exercisesList))
+            })
     }
 }

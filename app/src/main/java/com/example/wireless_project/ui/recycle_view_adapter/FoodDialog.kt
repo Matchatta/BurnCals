@@ -1,25 +1,26 @@
 package com.example.wireless_project.ui.recycle_view_adapter
 
-import android.app.Dialog
+import android.app.AlertDialog
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.*
-import android.widget.Button
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Food
+import com.example.wireless_project.ui.FoodActivity
 import com.example.wireless_project.ui.MainActivity
 import com.example.wireless_project.ui.model.FoodViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.confirm_dialog.*
 import kotlinx.android.synthetic.main.food_dialog.*
-import kotlinx.android.synthetic.main.food_dialog.cancel
-import kotlinx.android.synthetic.main.food_dialog.delete
 
 class FoodDialog: DialogFragment() {
     val viewModel : FoodViewModel = MainActivity.getFoodDataSource()
@@ -50,8 +51,9 @@ class FoodDialog: DialogFragment() {
         protien.setText(food.protein.toString(), TextView.BufferType.EDITABLE)
         fat.setText(food.fat.toString(), TextView.BufferType.EDITABLE)
         if(food.pic!= null){
-            val size = food.pic!!.size
-            val image = BitmapFactory.decodeByteArray(food.pic, 0, size)
+            val imgByte = Base64.decode(food.pic, Base64.DEFAULT)
+            val size = imgByte!!.size
+            val image = BitmapFactory.decodeByteArray(imgByte, 0, size)
             foodImage.setImageBitmap(image)
         }
     }
@@ -80,35 +82,22 @@ class FoodDialog: DialogFragment() {
             dismiss()
         }
         delete.setOnClickListener {
-            val dialog = context?.let { it1 -> Dialog(it1) }
-            if (dialog != null) {
-                dialog.setContentView(R.layout.confirm_dialog)
-                dialog.window?.apply {
-                    setLayout(
-                        WindowManager.LayoutParams.WRAP_CONTENT,
-                        WindowManager.LayoutParams.WRAP_CONTENT)
-                    setGravity(Gravity.CENTER)
-                }
-                val textView = dialog.findViewById<TextView>(R.id.text)
-                val foodView = dialog.findViewById<TextView>(R.id.foodDel)
-                foodView.text = "\""+ food.name+"\""
-                textView.text = getString(R.string.delete_check)
-                val cancel = dialog.findViewById<Button>(R.id.cancel)
-                val confirm = dialog.findViewById<Button>(R.id.delete)
-                cancel.setOnClickListener {
-                    dialog.dismiss()
-                }
-                confirm.setOnClickListener {
-                    disposable.add(viewModel.deleteFood(food)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnComplete {
-                            dialog.dismiss()
-                            dismiss() }
-                        .subscribe { Log.d("SUCCESS", "Good job")})
-                }
-                dialog.show()
+            val builder = AlertDialog.Builder(context,  R.style.DialogTheme2)
+            builder.setMessage(resources.getString(R.string.message))
+            builder.setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                disposable.add(viewModel.deleteFood(food)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe{
+                        Toast.makeText(context, resources.getString(R.string.delete), Toast.LENGTH_SHORT).show()
+                        FoodActivity.deleteData(food)
+                        dialog.dismiss()
+                        dismiss()})
             }
+            builder.setNegativeButton(resources.getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            builder.show()
         }
     }
 

@@ -1,10 +1,9 @@
 package com.example.wireless_project.ui
 
 import android.app.DatePickerDialog
-import android.content.Context
 import android.graphics.Color
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,25 +12,20 @@ import androidx.fragment.app.Fragment
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Exercises
 import com.example.wireless_project.database.entity.Food
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.exercises_record_dialog.*
 import kotlinx.android.synthetic.main.food_record_dialog.*
 import kotlinx.android.synthetic.main.fragment_record.*
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
 class RecordActivity : Fragment() {
-    lateinit var userEmail: String
-    lateinit var exercises: List<Exercises>
     private val calendar: Calendar = Calendar.getInstance()
     private val mYear = calendar.get(Calendar.YEAR)
     private val mMonth = calendar.get(Calendar.MONTH)
     private val mDay = calendar.get(Calendar.DATE)
-    private lateinit var foodList: List<Food>
-    private var addDate = "$mDay/$mMonth/$mYear"
+    //private lateinit var foodList: List<Food>
+    private var addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
     var goalExercises: Double = 0.0
     var maxEating: Double = 0.0
     var scope ="d"
@@ -49,24 +43,15 @@ class RecordActivity : Fragment() {
         return inflater.inflate(R.layout.fragment_record, container, false)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        loadFood()
-        loadExercises()
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.userEmail = email
         //test.text = Calendar.WEEK_OF_MONTH.toString()
+        loadExercisesFragment(ArrayList(exercisesList.filter{ it.addedDate == addDate}), goalExercises)
         setOnClick()
     }
     private fun setAnimation(percent: Double){
         val progressBar = circularProgressBar
         var p = percent
-
-//        else{
-//            progressBar.progressBarColor = R.color.colorPrimary
-//        }
         progressBar.apply {
             if(p > 100){
                 p = 100.0
@@ -74,25 +59,6 @@ class RecordActivity : Fragment() {
             }
             setProgressWithAnimation(p.toFloat(), 600)
         }
-    }
-    private fun loadFood(){
-        disposable.add(MainActivity.getFoodDataSource().getFood(email)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError { Log.d("ERROR62", it.toString()) }
-            .subscribe {
-                foodList = it
-            })
-    }
-    private fun loadExercises(){
-        disposable.add(MainActivity.getExercisesSource().getExercises(email)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError { Log.d("ERROR62", it.toString()) }
-            .subscribe { it ->
-                exercises = it
-                loadExercisesFragment(ArrayList(it.filter{ it.addedDate == addDate}), goalExercises)
-            })
     }
     private fun setOnClick(){
         val colorPrimary =  resources.getColor(R.color.colorPrimary)
@@ -164,9 +130,10 @@ class RecordActivity : Fragment() {
                 DatePickerDialog(
                     it1, R.style.DialogTheme,
                     DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, dayOfMonth ->
-                        val month = mMonth+1
-                        addDate = ("$dayOfMonth/$mMonth/$mYear")
-                        date.text = ("$dayOfMonth/$month/$mYear")
+                        calendar.set(mYear, mMonth, dayOfMonth)
+                        addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
+                        //val filter = foodList.filter { it.addedDate == addDate }
+                        date.text = SimpleDateFormat("MMMM dd, yyyy").format(calendar.time)
                         when (scope) {
                             "d" -> {
                                 day()
@@ -186,11 +153,11 @@ class RecordActivity : Fragment() {
     }
     private fun day(){
         if(fragmentFlag){
-            loadExercisesFragment(ArrayList(exercises.filter { it.addedDate == addDate }), goalExercises)
+            loadExercisesFragment(ArrayList(exercisesList.filter { it.addedDate == addDate }), goalExercises)
         }
         else{
             var burned = 0.0
-            for(ex in ArrayList(exercises.filter { it.addedDate == addDate })){
+            for(ex in ArrayList(exercisesList.filter { it.addedDate == addDate })){
                 burned += ex.cals
             }
             loadFoodFragment(ArrayList(foodList.filter { it.addedDate == addDate }), maxEating, burned)
@@ -206,13 +173,13 @@ class RecordActivity : Fragment() {
         }
         maxDay = c.getActualMaximum(Calendar.DAY_OF_MONTH)
         if(fragmentFlag){
-            loadExercisesFragment(ArrayList(exercises.filter {
+            loadExercisesFragment(ArrayList(exercisesList.filter {
                 it.addedDate.split("/")[1] == addDate.split("/")[1]
             }), goalExercises*maxDay)
         }
         else{
             var burned = 0.0
-            for(ex in ArrayList(exercises.filter { it.addedDate.split("/")[1] == addDate.split("/")[1]  })){
+            for(ex in ArrayList(exercisesList.filter { it.addedDate.split("/")[1] == addDate.split("/")[1]  })){
                 burned += ex.cals
             }
             loadFoodFragment(ArrayList(foodList.filter {
@@ -227,7 +194,7 @@ class RecordActivity : Fragment() {
         c.set(date[2].toInt(), date[1].toInt(), date[0].toInt())
         var week = c.get(Calendar.WEEK_OF_YEAR)
         if(fragmentFlag){
-            loadExercisesFragment(ArrayList(exercises.filter {
+            loadExercisesFragment(ArrayList(exercisesList.filter {
                 d.apply {
                     set(it.addedDate.split("/")[2].toInt(),it.addedDate.split("/")[1].toInt(), it.addedDate.split("/")[0].toInt()) }
                 d.get(Calendar.WEEK_OF_YEAR) == week
@@ -235,7 +202,7 @@ class RecordActivity : Fragment() {
         }
         else{
             var burned = 0.0
-            for(ex in ArrayList(exercises.filter { d.apply {
+            for(ex in ArrayList(exercisesList.filter { d.apply {
                 set(it.addedDate.split("/")[2].toInt(),it.addedDate.split("/")[1].toInt(), it.addedDate.split("/")[0].toInt()) }
                 d.get(Calendar.WEEK_OF_YEAR) == week })){
                 burned += ex.cals
@@ -287,7 +254,7 @@ class RecordActivity : Fragment() {
         }
         val total = runValue+walkValue+cyclingValue+otherValue
         if(total_calories != null&& circularProgressBar!= null){
-            total_calories.text = total.toString()
+            total_calories.text = String.format("%.1f", total)
             setAnimation((total/goalExercises)*100)
         }
 
@@ -322,10 +289,10 @@ class RecordActivity : Fragment() {
             fun newInstance(cycle: Double, run : Double, walk: Double, other: Double): ExercisesRecord{
                 val fragment = ExercisesRecord()
                 val args = Bundle().apply {
-                    putString(ARG_WALK, walk.toString())
-                    putString(ARG_RUN, run.toString())
-                    putString(ARG_CYCLE, cycle.toString())
-                    putString(ARG_OTHER, other.toString())
+                    putString(ARG_WALK, String.format("%.1f", walk))
+                    putString(ARG_RUN, String.format("%.1f", run))
+                    putString(ARG_CYCLE, String.format("%.1f", cycle))
+                    putString(ARG_OTHER, String.format("%.1f", other))
                 }
                 fragment.arguments = args
                 return fragment
@@ -356,9 +323,9 @@ class RecordActivity : Fragment() {
             fun newInstance(carb: Double, protein: Double, fat: Double): FoodRecord {
                 val fragment = FoodRecord()
                 val args = Bundle().apply {
-                    putString(ARG_CARB, carb.toString())
-                    putString(ARG_PROTEIN, protein.toString())
-                    putString(ARG_FAT, fat.toString())
+                    putString(ARG_CARB, String.format("%.1f", carb))
+                    putString(ARG_PROTEIN, String.format("%.1f", protein))
+                    putString(ARG_FAT, String.format("%.1f", fat))
                 }
                 fragment.arguments = args
                 return fragment
@@ -366,9 +333,11 @@ class RecordActivity : Fragment() {
         }
     }
     companion object{
-        lateinit var email:String
-        fun newInstance(email: String): RecordActivity {
-            this.email = email
+        lateinit var exercisesList: List<Exercises>
+        lateinit var foodList: List<Food>
+        fun newInstance(foods: List<Food>, exercises: List<Exercises>): RecordActivity{
+            foodList = foods
+            exercisesList = exercises
             return RecordActivity()
         }
     }

@@ -88,10 +88,6 @@
                     android:textAlignment="viewEnd"
                     android:textSize="16sp"
                     android:focusable="true" />
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -120,10 +116,6 @@
                     android:textAlignment="viewEnd"
 
                     android:textSize="16sp" />
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -164,10 +156,6 @@
 
                     android:textSize="16sp"
                     android:focusable="true" />
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow"/>
             </LinearLayout>
 
             <LinearLayout
@@ -207,11 +195,17 @@
 
                     android:textSize="16sp"
                     android:focusable="true" />
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow"/>
+
             </LinearLayout>
+            <Button
+                android:id="@+id/edit"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="@string/edit"
+                android:background="@drawable/box2"/>
         </LinearLayout>
 
         <View
@@ -255,7 +249,6 @@
                     android:text="@string/setting"
                     android:textAlignment="viewStart"
                     android:textAllCaps="false"
-
                     android:textSize="16sp" />
             </LinearLayout>
 

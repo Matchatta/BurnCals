@@ -14,4 +14,7 @@ class UserViewModel(private val dataSource: UserDao) :ViewModel(){
     fun insertUser(user: User): Completable{
         return dataSource.insertUser(user)
     }
+    fun updateUser(user: User): Completable{
+        return dataSource.updateUser(user)
+    }
 }

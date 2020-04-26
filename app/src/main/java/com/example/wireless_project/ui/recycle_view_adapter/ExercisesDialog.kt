@@ -1,35 +1,30 @@
 package com.example.wireless_project.ui.recycle_view_adapter
 
-import android.app.Dialog
+import android.app.AlertDialog
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Exercises
-import com.example.wireless_project.database.entity.Food
+import com.example.wireless_project.ui.ExercisesActivity
 import com.example.wireless_project.ui.MainActivity
 import com.example.wireless_project.ui.model.ExercisesViewModel
-import com.example.wireless_project.ui.model.FoodViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.exercises_dialog.*
-import kotlinx.android.synthetic.main.exercises_dialog.cals
-import kotlinx.android.synthetic.main.exercises_dialog.cancel
-import kotlinx.android.synthetic.main.exercises_dialog.exercisesName
-import kotlinx.android.synthetic.main.exercises_dialog.exercisesType
-import kotlinx.android.synthetic.main.exercises_dialog.location
-import kotlinx.android.synthetic.main.exercises_dialog.save
-import kotlinx.android.synthetic.main.fragment_add_exercises.*
 
 class ExercisesDialog: DialogFragment() {
-    val viewModel : ExercisesViewModel = MainActivity.getExercisesSource()
+    private val viewModel : ExercisesViewModel = MainActivity.getExercisesSource()
     private val disposable = CompositeDisposable()
     companion object{
         lateinit var exercises: Exercises
@@ -64,12 +59,11 @@ class ExercisesDialog: DialogFragment() {
         location.setText(exercises.location, TextView.BufferType.EDITABLE)
         cals.setText(exercises.cals.toString(), TextView.BufferType.EDITABLE)
         if(exercises.pic!= null){
-            val size = exercises.pic!!.size
-            val image = BitmapFactory.decodeByteArray(exercises.pic, 0, size)
+            val imgByte = Base64.decode(exercises.pic, Base64.DEFAULT)
+            val size = imgByte!!.size
+            val image = BitmapFactory.decodeByteArray(imgByte, 0, size)
             exercisesImage.setImageBitmap(image)
         }
-
-
     }
 
     override fun onCreateView(
@@ -95,35 +89,22 @@ class ExercisesDialog: DialogFragment() {
             dismiss()
         }
         delete.setOnClickListener {
-            val dialog = context?.let { it1 -> Dialog(it1) }
-            if (dialog != null) {
-                dialog.setContentView(R.layout.confirm_dialog)
-                dialog.window?.apply {
-                    setLayout(
-                        WindowManager.LayoutParams.WRAP_CONTENT,
-                        WindowManager.LayoutParams.WRAP_CONTENT)
-                    setGravity(Gravity.CENTER)
-                }
-                val textView = dialog.findViewById<TextView>(R.id.text)
-                val exView = dialog.findViewById<TextView>(R.id.foodDel)
-                exView.text = "\""+ exercises.name+"\""
-                textView.text = getString(R.string.delete_check)
-                val cancel = dialog.findViewById<Button>(R.id.cancel)
-                val confirm = dialog.findViewById<Button>(R.id.delete)
-                cancel.setOnClickListener {
-                    dialog.dismiss()
-                }
-                confirm.setOnClickListener {
-                    disposable.add(viewModel.deleteExercises(exercises)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnComplete {
-                            dialog.dismiss()
-                            dismiss() }
-                        .subscribe { Log.d("SUCCESS", "Good job")})
-                }
-                dialog.show()
+            val builder = AlertDialog.Builder(context, R.style.DialogTheme2)
+            builder.setMessage(resources.getString(R.string.message))
+            builder.setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                disposable.add(viewModel.deleteExercises(exercises)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe{
+                        Toast.makeText(context, resources.getString(R.string.delete), Toast.LENGTH_SHORT).show()
+                        ExercisesActivity.deleteData(exercises)
+                        dialog.dismiss()
+                        dismiss()})
             }
+            builder.setNegativeButton(resources.getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            builder.show()
         }
     }
 

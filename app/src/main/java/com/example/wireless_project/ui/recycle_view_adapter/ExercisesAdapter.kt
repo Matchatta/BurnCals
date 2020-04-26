@@ -1,6 +1,7 @@
 package com.example.wireless_project.ui.recycle_view_adapter
 
 import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +22,12 @@ class ExercisesAdapter(private var items: ArrayList<Exercises>): RecyclerView.Ad
                 var cal = item.cals
                 var size =0
                 if(item.pic!= null){
-                    size = item.pic!!.size
-                    val image = BitmapFactory.decodeByteArray(item.pic, 0, size)
+                    val img = Base64.decode(item.pic, Base64.DEFAULT)
+                    size = img.size
+                    val image = BitmapFactory.decodeByteArray(img, 0, size)
                     exercisesImage.setImageBitmap(image)
                 }
-                cals.text = cal.toString()
+                cals.text = String.format("%.1f", cal)
             }
             itemView.setOnClickListener {
                 val fragmentTransaction = con.supportFragmentManager.beginTransaction()
