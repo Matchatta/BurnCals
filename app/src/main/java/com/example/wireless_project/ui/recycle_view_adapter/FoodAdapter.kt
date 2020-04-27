@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Food
 import kotlinx.android.synthetic.main.food_cardview.view.*
-
+//set FoodAdapter
 class FoodAdapter(private var items: ArrayList<Food>): RecyclerView.Adapter<FoodAdapter.ViewHolder>() {
     lateinit var con : FragmentActivity
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,6 +37,7 @@ class FoodAdapter(private var items: ArrayList<Food>): RecyclerView.Adapter<Food
                 }
                 cals.text = String.format("%.1f", totalCal)
             }
+            //set onClickListener for clicking on item
             itemView.setOnClickListener {
                 val fragmentTransaction = con.supportFragmentManager.beginTransaction()
                 val dialog: DialogFragment = FoodDialog.newInstance(item)

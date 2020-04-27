@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Exercises
 import com.example.wireless_project.database.entity.Food
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.exercises_record_dialog.*
 import kotlinx.android.synthetic.main.food_record_dialog.*
 import kotlinx.android.synthetic.main.fragment_record.*
@@ -20,16 +19,16 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class RecordActivity : Fragment() {
+    //get current date
     private val calendar: Calendar = Calendar.getInstance()
     private val mYear = calendar.get(Calendar.YEAR)
     private val mMonth = calendar.get(Calendar.MONTH)
     private val mDay = calendar.get(Calendar.DATE)
-    //private lateinit var foodList: List<Food>
     private var addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
     var goalExercises: Double = 0.0
     var maxEating: Double = 0.0
+    //set calories summary to daily
     var scope ="d"
-    private val disposable = CompositeDisposable()
 
     private var fragmentFlag = true
     override fun onCreateView(
@@ -37,6 +36,7 @@ class RecordActivity : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View?{
+        //set exercise goal and eating limit
         val conf = MainActivity.getJSONData()
         goalExercises = conf.getGoalExercises()
         maxEating = conf.getMaxEating()
@@ -45,10 +45,11 @@ class RecordActivity : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //test.text = Calendar.WEEK_OF_MONTH.toString()
+        //load exercises summary as default fragment
         loadExercisesFragment(ArrayList(exercisesList.filter{ it.addedDate == addDate}), goalExercises)
         setOnClick()
     }
+    //set progress bar animation
     private fun setAnimation(percent: Double){
         val progressBar = circularProgressBar
         var p = percent
@@ -60,10 +61,13 @@ class RecordActivity : Fragment() {
             setProgressWithAnimation(p.toFloat(), 600)
         }
     }
+    //set onClickListener for all button
     private fun setOnClick(){
         val colorPrimary =  resources.getColor(R.color.colorPrimary)
         val colorWhite =  resources.getColor(R.color.colorWhite)
+        //exercises button
         exercises_btn.setOnClickListener {
+            //set lay out for exercises activity
             pic.setImageBitmap(resources.getDrawable(R.drawable.burn).toBitmap())
             exercises_btn.setTextColor(colorPrimary)
             eating_btn.setTextColor(colorWhite)
@@ -77,20 +81,17 @@ class RecordActivity : Fragment() {
                     month()
                 }
                 "w"->{
-
+                    week()
                 }
             }
         }
+        //food button
         eating_btn.setOnClickListener {
+            //set layout for food summary
             pic.setImageBitmap(resources.getDrawable(R.drawable.burger).toBitmap())
             word.text = getString(R.string.remaining)
             eating_btn.setTextColor(colorPrimary)
             exercises_btn.setTextColor(colorWhite)
-//            var burned = 0.0
-//            for(ex in ArrayList(exercises.filter { it.addedDate == addDate })){
-//                burned += ex.cals
-//            }
-//            loadFoodFragment(ArrayList(foodList.filter { it->it.addedDate==addDate }), maxEating, burned)
             fragmentFlag =false
             when(scope){
                 "d"->{
@@ -104,6 +105,7 @@ class RecordActivity : Fragment() {
                 }
             }
         }
+        //get daily summary
         day.setOnClickListener {
             day.setTextColor(colorPrimary)
             month.setTextColor(colorWhite)
@@ -111,6 +113,7 @@ class RecordActivity : Fragment() {
             scope ="d"
             day()
         }
+        //get monthly summary
         month.setOnClickListener {
             day.setTextColor(colorWhite)
             month.setTextColor(colorPrimary)
@@ -118,6 +121,7 @@ class RecordActivity : Fragment() {
             scope ="m"
             month()
         }
+        //set weekly summary
         week.setOnClickListener {
             day.setTextColor(colorWhite)
             month.setTextColor(colorWhite)
@@ -125,14 +129,15 @@ class RecordActivity : Fragment() {
             scope = "w"
             week()
         }
+        //date picker dialog
         date_picker.setOnClickListener {
+            //set new date that get from user
             context?.let { it1 ->
                 DatePickerDialog(
                     it1, R.style.DialogTheme,
                     DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, dayOfMonth ->
                         calendar.set(mYear, mMonth, dayOfMonth)
                         addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
-                        //val filter = foodList.filter { it.addedDate == addDate }
                         date.text = SimpleDateFormat("MMMM dd, yyyy").format(calendar.time)
                         when (scope) {
                             "d" -> {
@@ -151,48 +156,51 @@ class RecordActivity : Fragment() {
 
         }
     }
+    //set daily summary information
     private fun day(){
         if(fragmentFlag){
             loadExercisesFragment(ArrayList(exercisesList.filter { it.addedDate == addDate }), goalExercises)
         }
         else{
-            var burned = 0.0
-            for(ex in ArrayList(exercisesList.filter { it.addedDate == addDate })){
-                burned += ex.cals
-            }
+            var burned = exercisesList.filter { it.addedDate == addDate }.sumByDouble { it.cals }
             loadFoodFragment(ArrayList(foodList.filter { it.addedDate == addDate }), maxEating, burned)
         }
     }
+    //set monthly summary information
     private fun month(){
-        var maxDay = 30;
+        //set current month
+        var maxDay: Int
         val month = addDate.split("/")[1].toInt()
         val day = addDate.split("/")[0].toInt()
         val year = addDate.split("/")[2].toInt()
         val c = Calendar.getInstance().apply {
             set(year, month, day)
         }
+        //get day in month
         maxDay = c.getActualMaximum(Calendar.DAY_OF_MONTH)
+        //exercises summary
         if(fragmentFlag){
             loadExercisesFragment(ArrayList(exercisesList.filter {
                 it.addedDate.split("/")[1] == addDate.split("/")[1]
             }), goalExercises*maxDay)
         }
+        //food summary
         else{
-            var burned = 0.0
-            for(ex in ArrayList(exercisesList.filter { it.addedDate.split("/")[1] == addDate.split("/")[1]  })){
-                burned += ex.cals
-            }
+            val burned = exercisesList.filter { it.addedDate.split("/")[1] == addDate.split("/")[1]  }.sumByDouble { it.cals }
             loadFoodFragment(ArrayList(foodList.filter {
                 it.addedDate.split("/")[1] == addDate.split("/")[1]
             }), maxEating*maxDay, burned)
         }
     }
+    //set weekly summary information
     private fun week(){
         val c : Calendar = Calendar.getInstance()
         val d : Calendar = Calendar.getInstance()
         val date = addDate.split("/")
+        //set week from user picking
         c.set(date[2].toInt(), date[1].toInt(), date[0].toInt())
         var week = c.get(Calendar.WEEK_OF_YEAR)
+        //exercises summary
         if(fragmentFlag){
             loadExercisesFragment(ArrayList(exercisesList.filter {
                 d.apply {
@@ -200,18 +208,17 @@ class RecordActivity : Fragment() {
                 d.get(Calendar.WEEK_OF_YEAR) == week
             }), goalExercises*7)
         }
+        //food summary
         else{
-            var burned = 0.0
-            for(ex in ArrayList(exercisesList.filter { d.apply {
+            var burned = exercisesList.filter { d.apply {
                 set(it.addedDate.split("/")[2].toInt(),it.addedDate.split("/")[1].toInt(), it.addedDate.split("/")[0].toInt()) }
-                d.get(Calendar.WEEK_OF_YEAR) == week })){
-                burned += ex.cals
-            }
+                d.get(Calendar.WEEK_OF_YEAR) == week }.sumByDouble { it.cals }
             loadFoodFragment(ArrayList(foodList.filter { d.apply {
                 set(it.addedDate.split("/")[2].toInt(),it.addedDate.split("/")[1].toInt(), it.addedDate.split("/")[0].toInt()) }
                 d.get(Calendar.WEEK_OF_YEAR) == week }), maxEating*7, burned)
         }
     }
+    //set up layout for food summary
     private fun loadFoodFragment(foodList: ArrayList<Food>, maxEating: Double, burned: Double){
         var carbValue =0.0
         var proteinValue =0.0
@@ -228,8 +235,9 @@ class RecordActivity : Fragment() {
         val remaining = maxEating - total + burned
         total_calories.text = remaining.toString()
         setAnimation((total/maxEating)*100)
-        loadFragment(FoodRecord.newInstance(carbValue, carbValue, fatValue))
+        loadFragment(FoodRecord.newInstance(carbValue, proteinValue, fatValue))
     }
+    //set up layout for exercises summary
     private fun loadExercisesFragment(exercisesList: ArrayList<Exercises>, goalExercises: Double){
         var runValue = 0.0
         var walkValue = 0.0
@@ -260,6 +268,7 @@ class RecordActivity : Fragment() {
 
         loadFragment(ExercisesRecord.newInstance(cyclingValue, runValue, walkValue, otherValue))
     }
+    //load fragment
     private fun loadFragment(fragment: Fragment){
         val childFragment = childFragmentManager
         val transaction = childFragment.beginTransaction()
@@ -267,13 +276,14 @@ class RecordActivity : Fragment() {
         transaction.addToBackStack(null)
         transaction.commitAllowingStateLoss()
     }
+    //exercises fragment
     class ExercisesRecord : Fragment(){
         override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? = inflater.inflate(R.layout.exercises_record_dialog, container, false)
-
+        //set information to textView
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             walk.text = arguments?.getString(ARG_WALK)
@@ -300,13 +310,14 @@ class RecordActivity : Fragment() {
 
         }
     }
+    //food fragment
     class FoodRecord : Fragment(){
         override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? = inflater.inflate(R.layout.food_record_dialog, container, false)
-
+        //set information to textView
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             val cv = carb

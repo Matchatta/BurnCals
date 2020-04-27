@@ -45,26 +45,26 @@ class LoginActivity : AppCompatActivity(){
         private lateinit var mGoogleSignInClient: GoogleSignInClient
         //Firebase Auth
         private lateinit var auth: FirebaseAuth
+        //use to lunch this activity from another activity
         fun getLaunchIntent(from: Context) : Intent{
             auth.signOut()
             mGoogleSignInClient.signOut()
             return Intent(from, LoginActivity::class.java)
         }
-        fun refresh(from: Context): Intent{
-            return Intent(from, LoginActivity::class.java)
-        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
+        //set data source
         viewModelFactory = Injection.provideViewModelFactory(this)
         viewFoodModelFactory = Injection.provideFoodViewModelFactory(this)
         viewExercisesModelFactory = Injection.provideExercisesViewModelFactory(this)
+        //set google authenication service intent
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+        //set firebase authenication
         auth = FirebaseAuth.getInstance()
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso)
         google_button.setOnClickListener{
@@ -72,6 +72,7 @@ class LoginActivity : AppCompatActivity(){
         }
     }
     private fun signIn() {
+        //call google sign in
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -95,7 +96,7 @@ class LoginActivity : AppCompatActivity(){
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         Log.d("Login", "firebaseAuthWithGoogle:" + acct.id!!)
-
+        //fire base authennication medthod
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
@@ -103,7 +104,6 @@ class LoginActivity : AppCompatActivity(){
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Login", "signInWithCredential:success")
                     val user = auth.currentUser
-//                    updateUI(user)
                     checkUser(user)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -113,6 +113,7 @@ class LoginActivity : AppCompatActivity(){
             }
     }
 
+    //check user that he or she information is already in the database
     private fun checkUser(user: FirebaseUser?){
         disposable.add(viewModel.getUser(user?.email.toString())
             .subscribeOn(Schedulers.io())
@@ -123,11 +124,12 @@ class LoginActivity : AppCompatActivity(){
                 startActivity(RegisterActivity.getLaunchIntent(this, auth))
             }})
     }
-
+    //clear disposable on stop activity
     override fun onStop() {
         super.onStop()
         disposable.clear()
     }
+    //check user who is already sign in
     public override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
@@ -135,10 +137,10 @@ class LoginActivity : AppCompatActivity(){
             checkUser(currentUser)
         }
     }
-
+    //Load all food and exercises via email and pass it to the MainActivity
     private fun updateUI(user: User){
-        var foodList: MutableList<Food> = mutableListOf()
-        var exercisesList: MutableList<Exercises> = mutableListOf()
+        val foodList: MutableList<Food> = mutableListOf()
+        val exercisesList: MutableList<Exercises> = mutableListOf()
         disposable.add(viewFoodModel.getFood(user!!.email)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

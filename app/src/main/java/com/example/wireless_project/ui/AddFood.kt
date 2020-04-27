@@ -18,16 +18,15 @@ import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Food
 import com.example.wireless_project.ui.model.FoodViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_add_food.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
 class AddFood : Fragment() {
-
-    val viewModel : FoodViewModel = MainActivity.getFoodDataSource()
-    private val disposable = CompositeDisposable()
+    //get data source from main activity and get disposable from Main activity
+    private val viewModel : FoodViewModel = MainActivity.getFoodDataSource()
+    private val disposable = MainActivity.disposable
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,14 +42,19 @@ class AddFood : Fragment() {
             AddFood()
     }
     private fun openFoodFragment(){
+        //go to previous activity(Fragment)
         val fragmentManager = activity?.supportFragmentManager
         fragmentManager?.popBackStack()
     }
+    //set up onClickListener for all button
     private fun setOnClick() {
+        //cancel button
         cancel.setOnClickListener {
             openFoodFragment()
         }
+        //save button
         save.setOnClickListener {
+            //check that all fields have been already filled
             if (carbohydrate.text.isEmpty()||foodName.text.isEmpty()||protien.text.isEmpty()||fat.text.isEmpty()||location.text.isEmpty()){
                 if(carbohydrate.text.isEmpty()){
                     carbohydrate.error = getString(R.string.empty_message)
@@ -73,7 +77,9 @@ class AddFood : Fragment() {
                     location.requestFocus()
                 }
             }
+           //insert new meal
            else{
+                //retrieve information from fields
                 val email = MainActivity.userInformation?.email.toString()
                 val name = foodName.text.toString()
                 val card = carbohydrate.text.toString().toDouble()
@@ -82,10 +88,12 @@ class AddFood : Fragment() {
                 val location = location.text.toString()
                 val calendar = Calendar.getInstance()
                 val addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
+                //convert image from bitmap to Base64 string before put to database
                 val stream = ByteArrayOutputStream()
                 val img:Bitmap? = imm.drawable.toBitmap()
                 img?.compress(Bitmap.CompressFormat.PNG, 100, stream)
                 val image = Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT)
+                //insert new meal
                 val food = Food(userEmail = email, name = name, carb = card, protein = protein, fat = fat,pic = image, location = location, addedDate = addDate)
                 disposable.add(viewModel.insertFood(food)
                     .subscribeOn(Schedulers.io())
@@ -97,13 +105,14 @@ class AddFood : Fragment() {
             }
 
         }
+        //add picture button
         addPicture.setOnClickListener{
             dispatchTakePictureIntent()
         }
     }
 
-    val REQUEST_IMAGE_CAPTURE = 1
-
+    private val REQUEST_IMAGE_CAPTURE = 1
+    //connect to device camera
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(activity?.packageManager!!)?.also {
@@ -111,7 +120,7 @@ class AddFood : Fragment() {
             }
         }
     }
-
+    //get picture after took a picture
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {

@@ -45,12 +45,15 @@ class UserActivity : Fragment(){
         act = this
         setupUI()
     }
-
+    //set up layout action
     private fun setupUI(){
+        //sign out button
         sign_out_button.setOnClickListener {
             signOut()
         }
+        //set user picture by retrieve picture from url by using glide library
         Glide.with(activity).load(user.image).into(userImage)
+        //set user information to textview
         userName.text = (user.first_name +" "+user.last_name)
         height.text = String.format("%.1f", user.height)
         weight.text = String.format("%.1f", user.weight)
@@ -60,19 +63,25 @@ class UserActivity : Fragment(){
         }
         gender.text = gen
         dob.text = getFormatDate()
+        //edit button
         edit.setOnClickListener {
+            //open edit dialog to edit user information
             val fragmentTransaction = fragmentManager?.beginTransaction()
             val dialog: DialogFragment = UserDialog.newInstance(user)
             dialog.show(fragmentTransaction!!, dialog.javaClass::getSimpleName.toString())
         }
+        //setting button
         setting_button.setOnClickListener {
+            //open setting activity
             val fragmentManager = activity?.supportFragmentManager
             val transaction = fragmentManager?.beginTransaction()
             transaction?.replace(R.id.container, SettingActivity())
             transaction?.addToBackStack(null)
             transaction?.commit()
         }
+        //about button
         about_button.setOnClickListener {
+            //show application information
             val fragmentManager = activity?.supportFragmentManager
             val transaction = fragmentManager?.beginTransaction()
             transaction?.replace(R.id.container, AboutActivity())
@@ -80,6 +89,7 @@ class UserActivity : Fragment(){
             transaction?.commit()
         }
     }
+    //get formatted date by SimpleDateFormat
     private fun getFormatDate(): String {
         val dob = user.dob?.split("/")
         val day = dob?.get(0)!!.toInt()
@@ -89,6 +99,7 @@ class UserActivity : Fragment(){
         calendar.set(year, numMonth, day)
         return SimpleDateFormat("MMMM dd, yyyy").format(calendar.time)
     }
+    //go back to login activity
     private fun signOut(){
         val mainActivity = activity
         startActivity(mainActivity?.let { LoginActivity.getLaunchIntent(it) })

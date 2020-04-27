@@ -21,9 +21,12 @@ class SettingActivity : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         setUI()
     }
+    //set up layout action
     private fun setUI() {
+        //get information from configuration
         val conf = MainActivity.getJSONData()
         val fragment = activity?.supportFragmentManager
+        //get element in layout
         val exSeekBar = ex_seek_bar
         val foodSeekBar = food_seek_bar
         val exVal = ex
@@ -32,10 +35,11 @@ class SettingActivity : Fragment(){
         exVal.text = exSeekBar.progress.toString()
         foodSeekBar.progress = conf.getMaxEating().toInt()
         foodVal.text = foodSeekBar.progress.toString()
-
+        //back button (go to user activity)
         back.setOnClickListener {
             fragment?.popBackStack()
         }
+        //set up seek bar action
         exSeekBar.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(
@@ -56,6 +60,7 @@ class SettingActivity : Fragment(){
                 ).show()
             }
         })
+        //set up seek bar action
         foodSeekBar.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(
@@ -76,6 +81,7 @@ class SettingActivity : Fragment(){
                 ).show()
             }
         })
+        //save button save new configuration into json file
         save.setOnClickListener {
             val exGoal = exVal.text.toString().toDouble()
             val limit = foodVal.text.toString().toDouble()

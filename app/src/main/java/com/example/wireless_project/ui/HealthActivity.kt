@@ -10,15 +10,13 @@ import androidx.fragment.app.Fragment
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Exercises
 import com.example.wireless_project.database.entity.Food
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_healt.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HealthActivity : Fragment(){
-    lateinit var exercises : List<Exercises>
-    private val disposable = CompositeDisposable()
+
     private lateinit var conf : MainActivity.Configuration
+    //get current date
     private val calendar: Calendar = Calendar.getInstance()
     private var addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
     override fun onCreateView(
@@ -26,6 +24,7 @@ class HealthActivity : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //get exercises goal and eating limit
         conf = MainActivity.getJSONData()
         return inflater.inflate(R.layout.fragment_healt, container, false)
     }
@@ -34,9 +33,13 @@ class HealthActivity : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         setUI()
     }
+    //Set up layout
     private fun setUI(){
+        //set weight
         weight.text = String.format("%.1f", weightV)
+        //calculate bmi value
         val BMI = weightV/ (heightV* heightV)
+        //set bmi to textView and set shape body
         bmi.text = String.format("%.1f", BMI)
         when {
             BMI < 18.5 -> {
@@ -58,13 +61,12 @@ class HealthActivity : Fragment(){
         setUpExercises()
         setUpFood()
     }
+    //burned calories
     private var burned = 0.0
     private fun setUpExercises(){
+        //set up animation of progress ber and set burned calories to textView
         val circularProgress = circularProgressBarBurned
-        var p = 0.0
-        for (ex in ArrayList(exercisesList.filter { it.addedDate == addDate })){
-            p+= ex.cals
-        }
+        var p = exercisesList.filter { it.addedDate == addDate }.sumByDouble { it.cals }
         burned = p
         total_burned_calories.text = String.format("%.1f", p)
         p /= conf.getGoalExercises()
@@ -78,13 +80,9 @@ class HealthActivity : Fragment(){
         }
     }
     private fun setUpFood(){
+        //set up animation of progress ber and set eaten calories to textView
         val circularProgress = circularProgressBarEaten
-        var p = 0.0
-        for (food in ArrayList(foodList.filter { it.addedDate == addDate })){
-            p+= food.fat*9
-            p+= food.protein*4
-            p+= food.carb*4
-        }
+        var p = foodList.filter { it.addedDate == addDate }.sumByDouble { it.carb*4+it.protein*4+it.fat*9 }
         total_calories.text = String.format("%.1f", p)
         if(((conf.getMaxEating()+burned)-p) >0.0){
             remaining_cal.text = ((conf.getMaxEating()+burned)-p).toString()
@@ -92,6 +90,7 @@ class HealthActivity : Fragment(){
         else{
             remaining_cal.text = "0.0"
         }
+        //calculate the excess calories and display it on textView
         var excessCal =  (p-(conf.getMaxEating()+burned))
         if(excessCal < 0 ){
             excessCal =0.0
@@ -103,6 +102,7 @@ class HealthActivity : Fragment(){
         need_exercises.text = time
         p /= (conf.getMaxEating()+burned)
         p *= 100
+        //set up animation for progress bar
         circularProgress.apply {
             if(p > 100){
                 p = 100.0
@@ -116,10 +116,12 @@ class HealthActivity : Fragment(){
         lateinit var foodList: List<Food>
         var weightV: Double = 0.0
         var heightV: Double = 0.0
+        //use to set weight and height and send back this activity to start this activity
         fun newInstance(foods: List<Food>, exercises: List<Exercises>, w: Double, h: Double): HealthActivity {
             exercisesList = exercises
             foodList = foods
             weightV = w
+            //convert to meters
             heightV = h/100
             return HealthActivity()
         }

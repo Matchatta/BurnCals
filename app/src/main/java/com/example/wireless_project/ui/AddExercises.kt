@@ -19,16 +19,15 @@ import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Exercises
 import com.example.wireless_project.ui.model.ExercisesViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_add_exercises.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
 class AddExercises : Fragment() {
-
+    //get data source from main activity and get disposable from Main activity
     private val viewModel : ExercisesViewModel = MainActivity.getExercisesSource()
-    private val disposable = CompositeDisposable()
+    private val disposable = MainActivity.disposable
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,7 +43,8 @@ class AddExercises : Fragment() {
         fun newInstance(): AddExercises =
             AddExercises()
     }
-    fun setUI(){
+    private fun setUI(){
+        //set up the dropdown menu
         var dropDown = exercisesType
         val run = resources.getString(R.string.run)
         val walk = resources.getString(R.string.walk)
@@ -55,14 +55,18 @@ class AddExercises : Fragment() {
         dropDown.adapter = adapterArray
     }
     private fun openPreviousFragment(){
+        //go to previous activity(Fragment)
         val fragmentManager = activity?.supportFragmentManager
         fragmentManager?.popBackStack()
     }
     private fun setOnClick() {
+        //cancel button
         cancel.setOnClickListener {
             openPreviousFragment()
         }
+        //save button
         save.setOnClickListener {
+            //Check that all fields have been already filled
             if (exercisesName.text.isEmpty()||cals.text.isEmpty()||location.text.isEmpty()){
                 if(exercisesName.text.isEmpty()){
                     exercisesName.error = getString(R.string.empty_message)
@@ -77,7 +81,9 @@ class AddExercises : Fragment() {
                     cals.requestFocus()
                 }
             }
+            //insert new exercises to the sqlite
             else{
+                //getting information from the EditText and drp down menu
                 val email = MainActivity.userInformation?.email.toString()
                 val name = exercisesName.text.toString()
                 val type = exercisesType.selectedItem.toString()
@@ -85,10 +91,12 @@ class AddExercises : Fragment() {
                 val location = location.text.toString()
                 val calendar = Calendar.getInstance()
                 val addDate = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
+               //convert image to Base64 string before put to sqlite database
                 val stream = ByteArrayOutputStream()
                 val img:Bitmap? = imm.drawable.toBitmap()
                 img?.compress(Bitmap.CompressFormat.PNG, 100, stream)
                 val image = Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT)
+                //insert new exercises and turn back to exercises activity
                 val exercises = Exercises( userEmail =  email, name =  name, type = type, cals = cals,addedDate =  addDate,pic =  image,location =  location)
                 disposable.add(viewModel.insertExercises(exercises)
                     .subscribeOn(Schedulers.io())
@@ -100,13 +108,14 @@ class AddExercises : Fragment() {
 
             }
         }
+        //add picture button
         addPicture.setOnClickListener{
             dispatchTakePictureIntent()
         }
     }
 
-    val REQUEST_IMAGE_CAPTURE = 1
-
+    private val REQUEST_IMAGE_CAPTURE = 1
+    //camera intent(use to connect with device camera)
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(activity?.packageManager!!)?.also {
@@ -114,7 +123,7 @@ class AddExercises : Fragment() {
             }
         }
     }
-
+    //set image after took a photo
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {

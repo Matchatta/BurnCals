@@ -18,13 +18,12 @@ import com.example.wireless_project.ui.FoodActivity
 import com.example.wireless_project.ui.MainActivity
 import com.example.wireless_project.ui.model.FoodViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.food_dialog.*
 
 class FoodDialog: DialogFragment() {
-    val viewModel : FoodViewModel = MainActivity.getFoodDataSource()
-    private val disposable = CompositeDisposable()
+    private val viewModel : FoodViewModel = MainActivity.getFoodDataSource()
+    private val disposable = MainActivity.disposable
     companion object{
         lateinit var food: Food
         fun newInstance(food: Food): FoodDialog {
@@ -43,7 +42,7 @@ class FoodDialog: DialogFragment() {
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         dialog?.window?.setLayout(width.toInt(), height)
     }
-
+    //set up the layout
     private fun setUI() {
         foodName.setText(food.name, TextView.BufferType.EDITABLE)
         location.setText(food.location, TextView.BufferType.EDITABLE)
@@ -63,14 +62,17 @@ class FoodDialog: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.food_dialog, container, false)
-
+    //set all button action
     private fun setUp(){
+        //save button
         save.setOnClickListener {
+            //retrieve information from field
             food.name = foodName.text.toString()
             food.location = location.text.toString()
             food.carb = carbohydrate.text.toString().toDouble()
             food.fat = fat.text.toString().toDouble()
             food.protein = protien.text.toString().toDouble()
+            //update data
             disposable.add(viewModel.updateFood(food)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -78,12 +80,16 @@ class FoodDialog: DialogFragment() {
                 .subscribe { Log.d("SUCCESS", "Good job")})
 
         }
+        //dismiss dialog
         cancel.setOnClickListener {
             dismiss()
         }
+        //delete data
         delete.setOnClickListener {
+            //open alert dialog
             val builder = AlertDialog.Builder(context,  R.style.DialogTheme2)
             builder.setMessage(resources.getString(R.string.message))
+            //delete data
             builder.setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
                 disposable.add(viewModel.deleteFood(food)
                     .subscribeOn(Schedulers.io())

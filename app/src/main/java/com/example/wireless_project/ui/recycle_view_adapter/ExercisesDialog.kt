@@ -19,13 +19,12 @@ import com.example.wireless_project.ui.ExercisesActivity
 import com.example.wireless_project.ui.MainActivity
 import com.example.wireless_project.ui.model.ExercisesViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.exercises_dialog.*
 
 class ExercisesDialog: DialogFragment() {
     private val viewModel : ExercisesViewModel = MainActivity.getExercisesSource()
-    private val disposable = CompositeDisposable()
+    private val disposable = MainActivity.disposable
     companion object{
         lateinit var exercises: Exercises
         fun newInstance(exercises: Exercises): ExercisesDialog {
@@ -38,14 +37,16 @@ class ExercisesDialog: DialogFragment() {
         super.onStart()
         setUI()
         setUp()
+        //set dialog size
         val displayMetrics = DisplayMetrics()
         activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         dialog?.window?.setLayout(width, height)
     }
-
+    //set up layout
     private fun setUI() {
+        //set dropdown
         var dropDown = exercisesType
         val run = resources.getString(R.string.run)
         val walk = resources.getString(R.string.walk)
@@ -55,6 +56,7 @@ class ExercisesDialog: DialogFragment() {
         val adapterArray = context?.let { ArrayAdapter(it, R.layout.spinner_layout, items) }
         dropDown.adapter = adapterArray
         dropDown.setSelection(items.indexOf(exercises.type))
+        //set default values
         exercisesName.setText(exercises.name, TextView.BufferType.EDITABLE)
         location.setText(exercises.location, TextView.BufferType.EDITABLE)
         cals.setText(exercises.cals.toString(), TextView.BufferType.EDITABLE)
@@ -71,13 +73,16 @@ class ExercisesDialog: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.exercises_dialog, container, false)
-
+    //set all button action
     private fun setUp(){
+        //save button
         save.setOnClickListener {
+            //retrieve data from field
             exercises.name = exercisesName.text.toString()
             exercises.location = location.text.toString()
             exercises.cals = cals.text.toString().toDouble()
             exercises.type = exercisesType.selectedItem.toString()
+            //update information
             disposable.add(viewModel.updateExercises(exercises)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -85,12 +90,16 @@ class ExercisesDialog: DialogFragment() {
                 .subscribe { Log.d("SUCCESS", "Good job")})
 
         }
+        //dismiss this dialog
         cancel.setOnClickListener {
             dismiss()
         }
+        //delete exercises data
         delete.setOnClickListener {
+            //open alert dialog
             val builder = AlertDialog.Builder(context, R.style.DialogTheme2)
             builder.setMessage(resources.getString(R.string.message))
+            //delete data
             builder.setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
                 disposable.add(viewModel.deleteExercises(exercises)
                     .subscribeOn(Schedulers.io())

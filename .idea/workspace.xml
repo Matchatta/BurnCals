@@ -12,16 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90ddf058-98a0-462d-a38b-09aa9cf0f9c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/AboutActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/SettingActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/UserDialog.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_arrow_back_black_24dp.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/language_outline.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/toggle_widget_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_about.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/user_dialog.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/values-th/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.bin" afterDir="false" />
@@ -30,20 +20,12 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/database/dao/UserDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/database/dao/UserDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/database/entity/Exercises.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/database/entity/Exercises.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/database/entity/Food.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/database/entity/Food.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/database/entity/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/database/entity/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/Injection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/Injection.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/AboutActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/AboutActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/AddExercises.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/AddExercises.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/AddFood.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/AddFood.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/CustomDialog.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/ExercisesActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/ExercisesActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/FoodActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/FoodActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/GenderDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/GenderDialog.kt" afterDir="false" />
@@ -52,31 +34,13 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/RecordActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/RecordActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/RegisterActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/RegisterActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/SettingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/SettingActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/UserActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/UserActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/model/UserViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/model/UserViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/UserDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/UserDialog.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/recycle_view_adapter/ExercisesAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/recycle_view_adapter/ExercisesAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/recycle_view_adapter/ExercisesDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/recycle_view_adapter/ExercisesDialog.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/recycle_view_adapter/FoodAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/recycle_view_adapter/FoodAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/recycle_view_adapter/FoodDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wireless_project/ui/recycle_view_adapter/FoodDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/confirm_dialog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialogfragment.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/exercises_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/exercises_dialog.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/food_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/food_dialog.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_exercises.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_exercises.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_food.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_food.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_exercises.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_exercises.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_food.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_food.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_healt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_healt.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_record.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_record.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/gender_dialogfragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/gender_dialogfragment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/spinner_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spinner_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/bottom_navigation_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/bottom_navigation_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -336,7 +300,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587140507659</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="[Update] Finish">
+      <created>1587908125063</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1587908125063</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -358,6 +329,7 @@
     <MESSAGE value="[Add] Exercises, add exercises, etc." />
     <MESSAGE value="[Add] New update" />
     <MESSAGE value="[Add] Add health layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Add] Add health layout" />
+    <MESSAGE value="[Update] Finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Update] Finish" />
   </component>
 </project>

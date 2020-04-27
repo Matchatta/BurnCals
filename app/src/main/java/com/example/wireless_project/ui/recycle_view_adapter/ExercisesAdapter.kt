@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wireless_project.R
 import com.example.wireless_project.database.entity.Exercises
 import kotlinx.android.synthetic.main.exercises_cardview.view.*
-
+//set exercises adapter
 class ExercisesAdapter(private var items: ArrayList<Exercises>): RecyclerView.Adapter<ExercisesAdapter.ViewHolder>(){
     lateinit var con : FragmentActivity
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -29,6 +29,7 @@ class ExercisesAdapter(private var items: ArrayList<Exercises>): RecyclerView.Ad
                 }
                 cals.text = String.format("%.1f", cal)
             }
+            //set onClickListener for clicking on item
             itemView.setOnClickListener {
                 val fragmentTransaction = con.supportFragmentManager.beginTransaction()
                 val dialog: DialogFragment = ExercisesDialog.newInstance(item)

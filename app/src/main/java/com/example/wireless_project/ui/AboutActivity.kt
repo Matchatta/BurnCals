@@ -18,6 +18,7 @@ class AboutActivity: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fragment = activity?.supportFragmentManager
+        //Go back to previous activity(Fragment)
         back.setOnClickListener {
             fragment?.popBackStack()
         }

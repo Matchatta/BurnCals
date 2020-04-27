@@ -26,6 +26,7 @@ class RegisterActivity : AppCompatActivity(), GenderDialog.OnInputListener{
     private lateinit var viewModelFactory: ViewModelFactory
     private val viewModel: UserViewModel by viewModels{ viewModelFactory}
     private val disposable = CompositeDisposable()
+    //get current date
     val calendar: Calendar = Calendar.getInstance()
     private val year = calendar.get(Calendar.YEAR)
     private val month = calendar.get(Calendar.MONTH)
@@ -41,25 +42,33 @@ class RegisterActivity : AppCompatActivity(), GenderDialog.OnInputListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        //set user data source
         viewModelFactory = Injection.provideViewModelFactory(this)
         dob.text = SimpleDateFormat("MMMM dd, yyyy").format(calendar.time)
         setUp()
     }
+    //set setOnClickListener for all button
     private fun setUp(){
+        //show gender dialog
         gender.setOnClickListener {
             openDialog(GenderDialog())
         }
+        //show date picker dialog
         dob.setOnClickListener {
             datePicker()
         }
+        //insert new user to database
         register.setOnClickListener {
             setData()
         }
+        //go back to login activity
         cancel.setOnClickListener {
             startActivity(LoginActivity.getLaunchIntent(this))
         }
     }
+    //insert new user to database
     private fun setData(){
+        //check that user fill all the field
         if (height.text.isEmpty()||weight.text.isEmpty()){
             if(height.text.isEmpty()){
                 height.error = getString(R.string.empty_message)
@@ -70,7 +79,9 @@ class RegisterActivity : AppCompatActivity(), GenderDialog.OnInputListener{
                 weight.requestFocus()
             }
         }
+        //insert user to databse
         else{
+            //retrieve user information from firebase authenication and edittext
             val firstName : String? = authFire?.currentUser?.displayName?.split(" ")?.get(0)
             val lastName : String? = authFire?.currentUser?.displayName?.split(" ")?.get(1)
             val email : String? = authFire?.currentUser?.email
@@ -83,6 +94,7 @@ class RegisterActivity : AppCompatActivity(), GenderDialog.OnInputListener{
             }
             val dob: String? = dateOfBirth
             val newUser = User(email.toString(), firstName, lastName, weight, height, image, genderVal, dob)
+            //insert user to db and start main activity
             disposable.add(viewModel.insertUser(newUser)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -92,6 +104,7 @@ class RegisterActivity : AppCompatActivity(), GenderDialog.OnInputListener{
         }
 
     }
+    //datepicker dialog
     private fun datePicker(){
 
         val dateOfBirth = DatePickerDialog(this, R.style.DialogTheme,DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, dayOfMonth ->
@@ -103,16 +116,17 @@ class RegisterActivity : AppCompatActivity(), GenderDialog.OnInputListener{
         }, year, month, day)
         dateOfBirth.show()
     }
+    //use to open custon dialog
     private fun openDialog(dialog : DialogFragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         dialog.show(fragmentTransaction, dialog.javaClass::getSimpleName.toString())
     }
+    //clear disposable
     override fun onStop() {
         super.onStop()
         disposable.clear()
     }
-
-
+    //get gender from gender dialog
     override fun sendGender(input: String?) {
         gender.text = input
     }

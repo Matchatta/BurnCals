@@ -36,6 +36,7 @@ class UserDialog: DialogFragment() {
         super.onStart()
         setUI()
     }
+    //set up layout
     private fun setUI(){
         val date = user.dob!!.split("/")
         val calendar =android.icu.util.Calendar.getInstance()
@@ -50,17 +51,23 @@ class UserDialog: DialogFragment() {
         weight.setText(user.weight.toString())
         setOnClick()
     }
+    //set action for all button
     private fun setOnClick(){
+        //open gender picker dialog
         genderVal.setOnClickListener {
             loadDialog()
         }
+        //open date picker dialog
         dob.setOnClickListener {
             datePicker()
         }
+        //dismiss this dialog
         cancel.setOnClickListener {
             dismiss()
         }
+        //update user information
         save.setOnClickListener {
+            //retrieve data from edittext
             var gender : Int? = 0
             if(genderVal.text.toString() == getString(R.string.female)){
                 gender = 1
@@ -71,6 +78,7 @@ class UserDialog: DialogFragment() {
             user.dob = dob.text.toString()
             user.height = heightVal
             user.weight = weightVal
+            //update user information and dismiss dialog
             disposable.add(MainActivity.getUserSource().updateUser(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -79,6 +87,7 @@ class UserDialog: DialogFragment() {
                     dismiss()})
         }
     }
+    //datePicker dialog
     private fun datePicker(){
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -96,6 +105,7 @@ class UserDialog: DialogFragment() {
         dateOfBirth!!.show()
 
     }
+    //gender dialog
     private fun loadDialog(){
         val dialog = context?.let { it1 -> Dialog(it1) }
         if (dialog != null) {
@@ -123,7 +133,7 @@ class UserDialog: DialogFragment() {
             dialog.show()
         }
     }
-
+    //clear dialog after stop
     override fun onStop() {
         super.onStop()
         dialog?.dismiss()

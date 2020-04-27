@@ -11,13 +11,13 @@ import com.example.wireless_project.R
 import kotlinx.android.synthetic.main.gender_dialogfragment.*
 
 class GenderDialog: DialogFragment() {
-
+    //This class use to create a custom dialog and send back data, that user pick, to the caller
     interface OnInputListener {
         fun sendGender(input: String?)
     }
 
     var mOnInputGenderListener: OnInputListener? = null
-
+    //set dialog size
     override fun onStart() {
         super.onStart()
         setUp()
@@ -32,7 +32,9 @@ class GenderDialog: DialogFragment() {
     ): View? = inflater.inflate(R.layout.gender_dialogfragment, container, false)
 
     private fun setUp(){
+        //summit button
         summit.setOnClickListener {
+            //get data from radioButton
             val radioId = gender.checkedRadioButtonId
             val radioButton = view?.findViewById<RadioButton>(radioId)
             if (radioButton != null) {
