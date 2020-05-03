@@ -96,5 +96,9 @@ class ExercisesActivity : Fragment(){
             act.exercisesAdapter.notifyItemRemoved(index)
             act.setRecycle()
         }
+        //refresh data after update
+        fun updateData(){
+            act.setRecycle()
+        }
     }
 }

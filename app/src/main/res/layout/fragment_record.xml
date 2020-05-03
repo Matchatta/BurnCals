@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorBlack">
 
     <LinearLayout
+        android:weightSum="11"
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -26,8 +27,10 @@
             android:text="@string/record" />
 
         <LinearLayout
+            android:layout_weight="0.5"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
             android:orientation="horizontal">
             <Button
@@ -60,13 +63,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.5"
             android:id="@+id/date_picker"
             android:focusable="true"
             android:clickable="true"
-            android:layout_marginBottom="20dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="horizontal">
             <ImageView
 
@@ -85,13 +89,16 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_gravity="center">
             <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:layout_centerInParent="true"
                 android:id="@+id/circularProgressBar"
-                android:layout_width="220dp"
-                android:layout_height="220dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:cpb_background_progressbar_color="@color/colorPrimaryDarkerTransparent"
                 app:cpb_background_progressbar_width="8dp"
                 app:cpb_progress_direction="to_right"
@@ -112,7 +119,7 @@
                     android:gravity="center"
                     android:textColor="@color/colorPrimary"
                     android:text="@string/total"
-                    android:textSize="20sp" />
+                    android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/total_calories"
                     android:layout_width="wrap_content"
@@ -120,33 +127,35 @@
                     android:gravity="center"
                     android:textColor="@color/colorPrimaryDarker2"
                     android:text="@string/test"
-                    android:textSize="42sp" />
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="horizontal">
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:textColor="@color/colorPrimary"
-                       android:textSize="20sp"
-                       android:layout_marginEnd="5dp"
-                       android:text="@string/unit"/>
-                   <ImageView
-                       android:tint="@color/colorPrimary"
-                       android:id="@+id/pic"
-                       android:scaleType="fitCenter"
-                       android:layout_gravity="bottom"
-                       android:layout_width="20dp"
-                       android:padding="2dp"
-                       android:layout_height="match_parent"
-                       android:src="@drawable/burn"/>
-               </LinearLayout>
+                    android:textSize="36sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:layout_marginEnd="5dp"
+                        android:text="@string/unit"/>
+                    <ImageView
+                        android:tint="@color/colorPrimary"
+                        android:id="@+id/pic"
+                        android:scaleType="fitCenter"
+                        android:layout_gravity="bottom"
+                        android:layout_width="20dp"
+                        android:padding="2dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/burn"/>
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
         <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
             android:layout_margin="10dp"
             android:orientation="horizontal">
@@ -170,9 +179,9 @@
 
         </LinearLayout>
         <FrameLayout
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/container_record"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:layout_width="match_parent"
             android:layout_height="0dp"/>
 

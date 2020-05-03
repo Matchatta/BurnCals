@@ -76,7 +76,10 @@ class FoodDialog: DialogFragment() {
             disposable.add(viewModel.updateFood(food)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete { dismiss() }
+                .doOnComplete {
+                    FoodActivity.updateData()
+                    Toast.makeText(context, resources.getString(R.string.update), Toast.LENGTH_SHORT).show()
+                    dismiss() }
                 .subscribe { Log.d("SUCCESS", "Good job")})
 
         }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorBlack">
 
     <LinearLayout
+        android:weightSum="11"
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -20,32 +21,36 @@
 
         <TextView
             android:id="@+id/health"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:text="@string/health" />
         <LinearLayout
+            android:layout_weight="3.1"
+            android:weightSum="3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="@drawable/box_gradient"
             android:gravity="center"
             android:layout_marginTop="10dp"
             android:orientation="vertical">
             <LinearLayout
+                android:layout_weight="2.5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginTop="10dp"
+                android:weightSum="2"
                 android:orientation="horizontal">
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center">
                     <com.mikhaellopez.circularprogressbar.CircularProgressBar
                         android:layout_centerInParent="true"
                         android:id="@+id/circularProgressBarBurned"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         app:cpb_background_progressbar_color="@color/transparent"
                         app:cpb_background_progressbar_width="20dp"
                         app:cpb_progress_direction="to_right"
@@ -84,13 +89,13 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center">
                     <com.mikhaellopez.circularprogressbar.CircularProgressBar
                         android:layout_centerInParent="true"
                         android:id="@+id/circularProgressBarEaten"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         app:cpb_background_progressbar_color="@color/transparent"
                         app:cpb_background_progressbar_width="20dp"
                         app:cpb_progress_direction="to_right"
@@ -127,10 +132,10 @@
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
-
             <LinearLayout
+                android:layout_weight="0.5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
@@ -155,13 +160,14 @@
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
+            android:layout_weight="7.9"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="2"
+            android:layout_height="0dp"
+            android:weightSum="4"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_height="0dp"
                 android:weightSum="2"
                 android:layout_marginTop="15dp"
@@ -248,7 +254,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="7.5dp"
                 android:layout_marginBottom="15dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_height="0dp"
                 android:weightSum="2"
                 android:orientation="horizontal">

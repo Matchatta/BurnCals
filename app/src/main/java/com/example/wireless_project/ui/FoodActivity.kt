@@ -99,5 +99,9 @@ class FoodActivity : Fragment(){
             act.foodAdapter.notifyItemRemoved(index)
             act.setRecycleView()
         }
+        //update food from list is in main activity and refresh recycle view
+        fun updateData(){
+            act.setRecycleView()
+        }
     }
 }

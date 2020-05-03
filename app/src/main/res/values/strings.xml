@@ -86,5 +86,6 @@
     <string name="max_eating" translatable="false">2000</string>
     <string name="goal_exercises" translatable="false">3000</string>
     <string name="empty_message">Please fill your answer.</string>
+    <string name="update">Updated</string>
     <string name="description">\u0009 Burn Cals is an application that helps users to manage their lifestyle activities for having good health, including calculating food calories and recording exercises’ results. For the first step in the application, users have to log in and input their information, such as name, gender, date of birth, height, and weight. After that, users can add exercises that they want to record to the main page. For example, users can add running, indoor running, cycling, and walking exercises. Besides, users can add details of each food that they eat, after that the application will calculate total calories. For the application working, it collects data from every exercise and displays the result day by day, an average of the week, and the average of the month.</string>
 </resources>

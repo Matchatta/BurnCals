@@ -86,7 +86,10 @@ class ExercisesDialog: DialogFragment() {
             disposable.add(viewModel.updateExercises(exercises)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete { dismiss() }
+                .doOnComplete {
+                    ExercisesActivity.updateData()
+                    Toast.makeText(context, resources.getString(R.string.update), Toast.LENGTH_SHORT).show()
+                    dismiss() }
                 .subscribe { Log.d("SUCCESS", "Good job")})
 
         }
